@@ -1,0 +1,13 @@
+spacy
+nltk
+gensim
+transformers
+scikit-learn
+scikit-image
+opencv-python
+pandas
+numpy
+matplotlib
+fastapi
+uvicorn
+requests
