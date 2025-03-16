@@ -1,15 +1,23 @@
 from .base_response import APIResponse
 
 
-class UserCreatedResponse(APIResponse):
+class CreateUserResponse(APIResponse):
     id: str
     name: str
     email: str
 
 
-class UserRetrievedResponse(APIResponse):
-    pass
+class GetUserResponse(APIResponse):
+    id: str
+    name: str
+    email: str
 
 
-class UsersRetrievedResponse(APIResponse):
-    users: UserRetrievedResponse
+class ListUsersResponse(APIResponse):
+    users: list[GetUserResponse] = []
+
+
+class UpdateUserResponse(APIResponse):
+    id: str
+    name: str
+    email: str

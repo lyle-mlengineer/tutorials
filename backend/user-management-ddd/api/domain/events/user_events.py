@@ -2,12 +2,12 @@ from .base_event import BaseEvent
 
 
 class UserCreated(BaseEvent):
-    id: str
-    name: str
-    email: str
+    pass
 
 
 class UserFetched(BaseEvent):
-    id: str
-    name: str
-    email: str
+    pass
+
+
+class UserDeleted(BaseEvent):
+    pass

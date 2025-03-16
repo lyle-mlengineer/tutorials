@@ -2,6 +2,7 @@ from typing import Optional
 
 from ....domain.entities.user import User
 from ....domain.repositories.user_repository import UserRepository
+from ....exceptions.application import AccountNotFoundError
 
 
 class UserInMemoryRepository(UserRepository):
@@ -18,14 +19,24 @@ class UserInMemoryRepository(UserRepository):
         self._users.append(entity)
         return entity
 
-    def delete_entity(self, id):
-        return super().delete_entity(id)
+    def delete_entity(self, id: str) -> User:
+        user = None
+        for user in self._users:
+            if user.id == id:
+                user = user
+        if not user:
+            raise AccountNotFoundError(f"The user with id '{id}' was not found!")
+        self._users.remove(user)
+        return user
 
-    def get_entity(self, id):
-        return super().get_entity(id)
+    def get_entity(self, id: str) -> User:
+        for user in self._users:
+            if user.id == id:
+                return user
+        raise AccountNotFoundError(f"The user with id '{id}' was not found!")
 
-    def list_entities(self, filters):
-        return super().list_entities(filters)
+    def list_entities(self, filters) -> Optional[list[User]]:
+        return self._users
 
     def update_entity(self, entity):
         return super().update_entity(entity)

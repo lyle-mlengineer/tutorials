@@ -1,7 +1,13 @@
+from typing import Optional
+
 from ...domain.entities.user import User
 from ...infrastructure.mediators.base_mediator import BaseMediator
-from ..commands.user.user_commands import CreateUserCommand
-from ..responses.user_responses import UserCreatedResponse
+from ..commands.user.user_commands import (CreateUserCommand,
+                                           DeleteUserCommand,
+                                           UpdateUserCommand)
+from ..queries.user.user_queries import GetUserQuery, ListUsersQuery
+from ..responses.user_responses import (CreateUserResponse, GetUserResponse,
+                                        ListUsersResponse, UpdateUserResponse)
 from .base_service import BaseService
 
 
@@ -10,18 +16,20 @@ class UserService(BaseService):
         super().__init__()
         self.mediator = mediator
 
-    def create_entity(self, command: CreateUserCommand) -> UserCreatedResponse:
+    def create_entity(self, command: CreateUserCommand) -> CreateUserResponse:
         user: User = self.mediator.handle_command(command=command)
-        return UserCreatedResponse(id=user.id, name=user.name, email=user.email)
+        return CreateUserResponse(id=user.id, name=user.name, email=user.email)
 
-    def get_entity(self, query):
-        return super().get_entity(query)
+    def get_entity(self, query: GetUserQuery) -> Optional[GetUserResponse]:
+        user: User = self.mediator.handle_query(query=query)
+        return GetUserResponse(id=user.id, email=user.email, name=user.name)
 
-    def delete_entity(self, command):
-        return super().delete_entity(command)
+    def delete_entity(self, command: DeleteUserCommand) -> None:
+        self.mediator.handle_command(command=command)
+        return None
 
-    def update_entity(self, command):
-        return super().update_entity(command)
+    def update_entity(self, command: UpdateUserCommand) -> UpdateUserResponse:
+        return self.mediator.handle_command(command)
 
-    def list_entities(self, query):
-        return super().list_entities(query)
+    def list_entities(self, query: ListUsersQuery) -> ListUsersResponse:
+        return self.mediator.handle_query(query)

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Literal, Optional
 
 from ..entities.base_entity import BaseEntity
 
@@ -10,17 +10,19 @@ class BaseRepository(ABC):
         pass
 
     @abstractmethod
-    def get_entity(self, id: int) -> Optional[BaseEntity]:
+    def get_entity(self, id: str) -> Optional[BaseEntity]:
         pass
 
     @abstractmethod
-    def list_entities(self, filters: dict) -> Optional[BaseEntity]:
+    def list_entities(
+        self, skip: int = 0, limit: int = 10, sort: Literal["asc", "desc"] = "asc"
+    ) -> list[BaseEntity] | list:
         pass
 
     @abstractmethod
-    def update_entity(self, entity: BaseEntity) -> None:
+    def update_entity(self, entity: BaseEntity) -> BaseEntity:
         pass
 
     @abstractmethod
-    def delete_entity(self, id: int) -> None:
+    def delete_entity(self, id: str) -> BaseEntity:
         pass

@@ -18,8 +18,9 @@ class Mediator(BaseMediator):
         handler: BaseCommandHandler = self._command_handlers[command.__class__]
         return handler.handle(command)
 
-    def handle_query(self, query):
-        return super().handle_query(query)
+    def handle_query(self, query: BaseQuery):
+        handler: BaseQueryHandler = self._query_handlers[query.__class__]
+        return handler.handle(query)
 
     def register_query(self, query, handler):
-        return super().register_query(query, handler)
+        self._query_handlers[query] = handler
