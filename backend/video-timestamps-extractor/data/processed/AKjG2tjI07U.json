@@ -1,0 +1,90 @@
+{
+    "video_id": "AKjG2tjI07U",
+    "timestamps": [
+        {
+            "title": ".NET 9 Web API & Entity Framework \ud83d\ude80 Full Course",
+            "timestamp": "00:00"
+        },
+        {
+            "title": "Prepare & Create the Project",
+            "timestamp": "00:47"
+        },
+        {
+            "title": "Project Overview",
+            "timestamp": "04:03"
+        },
+        {
+            "title": "About OpenAPI",
+            "timestamp": "10:00"
+        },
+        {
+            "title": "Add Scalar for Manual API Tests",
+            "timestamp": "13:40"
+        },
+        {
+            "title": "Add the VideoGame Model",
+            "timestamp": "16:20"
+        },
+        {
+            "title": "Add the VideoGameController",
+            "timestamp": "16:50"
+        },
+        {
+            "title": "Implement your first GET Call",
+            "timestamp": "20:19"
+        },
+        {
+            "title": "Get a Single Video Game",
+            "timestamp": "23:37"
+        },
+        {
+            "title": "Create a Video Game with POST",
+            "timestamp": "27:43"
+        },
+        {
+            "title": "Update a Video Game with PUT",
+            "timestamp": "32:15"
+        },
+        {
+            "title": "Delete a Video Game",
+            "timestamp": "36:39"
+        },
+        {
+            "title": "Add Persistence with SQL Server & Entity Framework",
+            "timestamp": "38:14"
+        },
+        {
+            "title": "Implement the VideoGameDbContext",
+            "timestamp": "38:30"
+        },
+        {
+            "title": "Add the ConnectionString in the appsettings.json",
+            "timestamp": "41:15"
+        },
+        {
+            "title": "Register the DbContext in the Program.cs",
+            "timestamp": "43:04"
+        },
+        {
+            "title": "Install the SqlServer Provider",
+            "timestamp": "44:29"
+        },
+        {
+            "title": "Install SQL Server Express",
+            "timestamp": "45:35"
+        },
+        {
+            "title": "CodeFirst Migrations",
+            "timestamp": "46:24"
+        },
+        {
+            "title": "Seed Data",
+            "timestamp": "51:25"
+        },
+        {
+            "title": "Implement CRUD with Entity Framework",
+            "timestamp": "53:47"
+        }
+    ],
+    "description": "\ud83c\udf37 Spring Sale is Blooming at the .NET Web Academy! \ud83c\udf37 Save up to 70% here: https://dnwa.net/4eFhE5v\n---\n\ud83d\udcbb Get the Source Code for FREE here: https://dnwa.net/3Eja7Nc\n\n00:00:00 .NET 9 Web API & Entity Framework \ud83d\ude80 Full Course\n00:00:47 Prepare & Create the Project\n00:04:03 Project Overview\n00:10:00 About OpenAPI\n00:13:40 Add Scalar for Manual API Tests\n00:16:20 Add the VideoGame Model\n00:16:50 Add the VideoGameController\n00:20:19 Implement your first GET Call\n00:23:37 Get a Single Video Game\n00:27:43 Create a Video Game with POST\n00:32:15 Update a Video Game with PUT\n00:36:39 Delete a Video Game\n00:38:14 Add Persistence with SQL Server & Entity Framework\n00:38:30 Implement the VideoGameDbContext\n00:41:15 Add the ConnectionString in the appsettings.json\n00:43:04 Register the DbContext in the Program.cs\n00:44:29 Install the SqlServer Provider\n00:45:35 Install SQL Server Express\n00:46:24 Code-First Migrations\n00:51:25 Seed Data\n00:53:47 Implement CRUD with Entity Framework"
+}

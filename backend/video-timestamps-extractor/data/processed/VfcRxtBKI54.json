@@ -1,0 +1,42 @@
+{
+    "video_id": "VfcRxtBKI54",
+    "timestamps": [
+        {
+            "title": "Intro",
+            "timestamp": "0:00"
+        },
+        {
+            "title": "Relational Database",
+            "timestamp": "0:25"
+        },
+        {
+            "title": "Columnar Database",
+            "timestamp": "3:12"
+        },
+        {
+            "title": "Document Database",
+            "timestamp": "6:28"
+        },
+        {
+            "title": "Graph Database",
+            "timestamp": "10:53"
+        },
+        {
+            "title": "Vector Database",
+            "timestamp": "13:31"
+        },
+        {
+            "title": "Keyvalue Database",
+            "timestamp": "14:40"
+        },
+        {
+            "title": "Timeseries Database",
+            "timestamp": "16:51"
+        },
+        {
+            "title": "Outro",
+            "timestamp": "17:44"
+        }
+    ],
+    "description": "\ud83d\udd34 To support my channel, I'd like to offer Mentorship/On-the-Job Support/Consulting (me@antonputra.com)\n\n\ud83c\udf7f Benchmarks: https://youtube.com/playlist?list=PLiMWaCMwGJXmcDLvMQeORJ-j_jayKaLVn&si=p-UOaVM_6_SFx52H\n\n\ud83d\udc4b AWS is expensive - Infra Support Fund: https://buymeacoffee.com/antonputra\n\n\u25ac\u25ac\u25ac\u25ac\u25ac Experience & Location \ud83d\udcbc \u25ac\u25ac\u25ac\u25ac\u25ac\n\u25ba  I\u2019m a Senior Software Engineer at Juniper Networks (13+ years of experience)\n\u25ba  Located in San Francisco Bay Area, CA (US citizen)\n\n\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac Connect with me \ud83d\udc4b \u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\n\u25ba  LinkedIn: https://www.linkedin.com/in/anton-putra\n\u25ba  Twitter/X: https://twitter.com/antonvputra\n\u25ba  GitHub: https://github.com/antonputra\n\u25ba  Email: me@antonputra.com\n\n\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac Related videos \ud83d\udc68\u200d\ud83c\udfeb \u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\n\ud83d\udc49  [Playlist] Kubernetes Tutorials: https://www.youtube.com/playlist?list=PLiMWaCMwGJXnHmccp2xlBENZ1xr4FpjXF\n\ud83d\udc49  [Playlist] Terraform Tutorials: https://www.youtube.com/playlist?list=PLiMWaCMwGJXmJdmfJjG3aK1IkU7oWvxIj\n\ud83d\udc49  [Playlist] Network Tutorials: https://www.youtube.com/playlist?list=PLiMWaCMwGJXluySjXqWG6fg1H1hzd-zWz\n\ud83d\udc49  [Playlist] Apache Kafka Tutorials: https://www.youtube.com/playlist?list=PLiMWaCMwGJXlL8-E-xu8RBwyC5YfS3V5e\n\ud83d\udc49  [Playlist] Performance Benchmarks: https://www.youtube.com/playlist?list=PLiMWaCMwGJXl-h2RgOSpdO-pQaSRwlVjd\n\ud83d\udc49  [Playlist] Database Tutorials: https://www.youtube.com/playlist?list=PLiMWaCMwGJXnhmmh5pu9sdWekdRwAzV5f\n\n\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac Timestamps \u23f0  \u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\n0:00 Intro\n0:25 Relational Database\n3:12 Columnar Database\n6:28 Document Database\n10:53 Graph Database\n13:31 Vector Database\n14:40 Key-value Database\n16:51 Time-series Database\n17:44 Outro\n\n\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac Source Code \ud83d\udcda \u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\n\u25ba  GitHub: https://github.com/antonputra/tutorials\n\n#database #cloud #devops"
+}

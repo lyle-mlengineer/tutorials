@@ -1,0 +1,42 @@
+Get a Free System Design Roadmap PDF with 145 pages by subscribing to our monthly newsletter: https://lucianoprea.com/roadmap
+
+✏️📘  Summary Notes:  https://lucianoprea.com/blog/consistent-hashing
+
+Key-Value 🐇 
+1:04  -  Flexible for Unstructured Data
+1:22  -  Fast Lookup
+1:53  -  In-Memory Database
+3:59  -  Not for Complex Data Structures
+4:21  -  Not for ACID transactions
+4:53  -  Not for Historical Data
+5:13  -  Caching
+
+Wide-column 🎡
+6:16  -  Column layout
+6:57  -  Primary Keys
+7:52  -  Denormalized
+8:40  -  Not for Random Filtering and Rich queries
+9:51  -  Not for Transaction Processing
+10:39  -  High scalability
+11:52  -  Optimized for Writes
+
+Document 📑
+12:32  -  Denormalized
+13:47  -  Handle Unstructured Data
+14:23  -  Indexing and Rich Query
+15:03  -  Not for Complex joins and relationships
+16:01  -  Not for Referential integrity
+16:20  -  Most intuitive
+
+Relational 👑
+17:02  -  Mature and formalized datamodel
+17:47  -  Normalization
+18:44  -  Difficult to scale horizontally
+19:26  -  ACID
+
+Graph 🍇
+20:51  -  No need to compute the relationships at query time
+21:49  -  Handles Complex Data Structures
+22:20  -  Difficult to scale
+22:51  -  Not for Write-heavy workloads
+23:47  -  Multi-hop relationships

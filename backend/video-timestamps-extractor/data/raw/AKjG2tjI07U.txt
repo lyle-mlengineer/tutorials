@@ -1,0 +1,25 @@
+🌷 Spring Sale is Blooming at the .NET Web Academy! 🌷 Save up to 70% here: https://dnwa.net/4eFhE5v
+---
+💻 Get the Source Code for FREE here: https://dnwa.net/3Eja7Nc
+
+00:00:00 .NET 9 Web API & Entity Framework 🚀 Full Course
+00:00:47 Prepare & Create the Project
+00:04:03 Project Overview
+00:10:00 About OpenAPI
+00:13:40 Add Scalar for Manual API Tests
+00:16:20 Add the VideoGame Model
+00:16:50 Add the VideoGameController
+00:20:19 Implement your first GET Call
+00:23:37 Get a Single Video Game
+00:27:43 Create a Video Game with POST
+00:32:15 Update a Video Game with PUT
+00:36:39 Delete a Video Game
+00:38:14 Add Persistence with SQL Server & Entity Framework
+00:38:30 Implement the VideoGameDbContext
+00:41:15 Add the ConnectionString in the appsettings.json
+00:43:04 Register the DbContext in the Program.cs
+00:44:29 Install the SqlServer Provider
+00:45:35 Install SQL Server Express
+00:46:24 Code-First Migrations
+00:51:25 Seed Data
+00:53:47 Implement CRUD with Entity Framework
