@@ -22,6 +22,13 @@ class FileCache(CacheBase):
         if not os.path.exists(self._cache_path):
             with open(self._cache_path, "w") as f:
                 json.dump({}, f)
+        else:
+            try:
+                with open(self._cache_path, "r") as f:
+                    items = json.load(f)
+            except json.JSONDecodeError:
+                with open(self._cache_path, "w") as f:
+                    json.dump({}, f)
         with open(self._cache_path, "r") as f:
             items = json.load(f)
         return items
@@ -50,11 +57,10 @@ class FileCache(CacheBase):
         return result
 
     def delete(self, key: str) -> User | None:
+        user: User = self.repository.delete_entity(key)
         cache: dict[str, dict] = self._load_file()
         result: dict = cache.get(key)
         if result:
             del cache[key]
             self._save_file(cache)
-            result: User = self.repository.delete_entity(key)
-            return result
-        return None
+        return user

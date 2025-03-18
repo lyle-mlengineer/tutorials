@@ -20,3 +20,7 @@ class LoginUserQuery(BaseQuery):
 
 class GetUserFromTokenQuery(BaseQuery):
     token: str
+
+
+class RequestPasswordResetQuery(BaseQuery):
+    id: str

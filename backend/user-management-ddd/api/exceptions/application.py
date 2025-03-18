@@ -18,6 +18,14 @@ class InvalidCredentialsError(AuthenticationError):
     """Raised when invalid credentials are provided"""
 
 
+class AccountNotActiveError(AuthenticationError):
+    """Raised when an account is not active"""
+
+
+class UserLoggedOutError(AuthenticationError):
+    """Raised when a user is logged out"""
+
+
 class AuthorizationError(ApplicationError):
     """Base exception for all authorization errors"""
 

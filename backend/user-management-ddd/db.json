@@ -1,8 +1,10 @@
 [
     {
-        "id": "US-e2005f88-b45c-43c4-ba2e-30cf4dc0f417",
+        "id": "US-6b458308-00f1-47c5-8e29-381b665474a6",
         "name": "lyle",
         "email": "lyle@gmail.com",
+        "is_logged_in": false,
+        "is_active": false,
         "password": "lyle"
     }
 ]

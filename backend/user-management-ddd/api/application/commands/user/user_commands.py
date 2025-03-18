@@ -17,3 +17,17 @@ class UpdateUserCommand(BaseCommand):
 
 class DeleteUserCommand(BaseCommand):
     id: str
+
+
+class ActivateUserAccountCommand(BaseCommand):
+    token: str
+    id: str = None
+
+
+class LogoutUserCommand(BaseCommand):
+    id: str
+
+
+class ResetPasswordCommand(BaseCommand):
+    id: str
+    password: str

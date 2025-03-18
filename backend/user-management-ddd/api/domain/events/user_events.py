@@ -15,3 +15,19 @@ class UserDeleted(BaseEvent):
 
 class UserLoggedIn(BaseEvent):
     pass
+
+
+class UserLoggedOut(BaseEvent):
+    pass
+
+
+class UserAccountActivated(BaseEvent):
+    pass
+
+
+class PasswordResetRequested(BaseEvent):
+    pass
+
+
+class PasswordResetConfirmed(BaseEvent):
+    pass

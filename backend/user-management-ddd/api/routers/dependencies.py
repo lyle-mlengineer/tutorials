@@ -4,18 +4,20 @@ from fastapi import Depends, Header
 from fastapi.security import OAuth2PasswordBearer
 
 from ..application.commands.user.user_command_handlers import (
-    CreateUserCommandHandler, DeleteUserCommandHandler,
-    UpdateUserCommandHandler)
-from ..application.commands.user.user_commands import (CreateUserCommand,
-                                                       DeleteUserCommand,
-                                                       UpdateUserCommand)
+    ActivateUserAccountCommandHandler, CreateUserCommandHandler,
+    DeleteUserCommandHandler, LogoutUserCommandHandler,
+    ResetPasswordCommandHandler, UpdateUserCommandHandler)
+from ..application.commands.user.user_commands import (
+    ActivateUserAccountCommand, CreateUserCommand, DeleteUserCommand,
+    LogoutUserCommand, ResetPasswordCommand, UpdateUserCommand)
 from ..application.queries.user.user_queries import (GetUserFromTokenQuery,
                                                      GetUserQuery,
                                                      ListUsersQuery,
-                                                     LoginUserQuery)
+                                                     LoginUserQuery,
+                                                     RequestPasswordResetQuery)
 from ..application.queries.user.user_query_handlers import (
     GetUserFromTokenQueryHandler, GetUserQueryHandler, ListUsersQueryHandler,
-    LoginUserQueryHandler)
+    LoginUserQueryHandler, PasswordResetRequestQueryHandler)
 from ..application.services.base_service import BaseService
 from ..application.services.user_service import UserService
 from ..domain.entities.user import User
@@ -27,6 +29,7 @@ from ..infrastructure.event_publishers.cmd_publisher import \
     CommandLineEventPublisher
 from ..infrastructure.event_publishers.redis_publisher import \
     RedisEventPublisher
+from ..infrastructure.mail_providers.cmd_mailer import CMDEmailService
 from ..infrastructure.mediators.mediator import Mediator
 from ..infrastructure.repositories.user.file_repository import FileRepository
 from ..infrastructure.repositories.user.in_memory_repository import \
@@ -41,7 +44,10 @@ redis_pub = RedisEventPublisher()
 rq_writer = RedisQueueWriter()
 
 create_user_command_handler: CreateUserCommandHandler = CreateUserCommandHandler(
-    user_repository=file_repo, event_publisher=publisher, database_writer=db_writer
+    user_repository=file_repo,
+    event_publisher=publisher,
+    database_writer=db_writer,
+    email_service=CMDEmailService(),
 )
 get_user_handler = GetUserQueryHandler(event_publisher=publisher, cache=cache)
 delete_user_handler = DeleteUserCommandHandler(
@@ -57,6 +63,21 @@ login_user = LoginUserQueryHandler(event_publisher=publisher, repository=file_re
 user_from_token = GetUserFromTokenQueryHandler(
     event_publisher=publisher, repository=file_repo
 )
+activate_account = ActivateUserAccountCommandHandler(
+    event_publisher=publisher,
+    database_writer=db_writer,
+    repository=file_repo,
+)
+logout_user = LogoutUserCommandHandler(
+    event_publisher=publisher, cache=cache, database_writer=db_writer
+)
+reset_handler = PasswordResetRequestQueryHandler(
+    event_publisher=publisher, repository=file_repo, email_service=CMDEmailService()
+)
+
+password_resestter = ResetPasswordCommandHandler(
+    event_publisher=publisher, database_writer=db_writer, repository=file_repo
+)
 
 
 def get_mediator() -> Mediator:
@@ -68,6 +89,10 @@ def get_mediator() -> Mediator:
     mediator.register_command(UpdateUserCommand, update_user)
     mediator.register_query(LoginUserQuery, login_user)
     mediator.register_query(GetUserFromTokenQuery, user_from_token)
+    mediator.register_command(ActivateUserAccountCommand, activate_account)
+    mediator.register_command(LogoutUserCommand, logout_user)
+    mediator.register_query(RequestPasswordResetQuery, reset_handler)
+    mediator.register_command(ResetPasswordCommand, password_resestter)
     return mediator
 
 
@@ -75,7 +100,7 @@ def get_user_service(mediator: Mediator = Depends(get_mediator)) -> BaseService:
     return UserService(mediator=mediator)
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/oauth/login")
 
 
 async def get_current_user(

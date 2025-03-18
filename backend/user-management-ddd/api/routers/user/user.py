@@ -3,12 +3,11 @@ from typing import Annotated, Literal
 from fastapi import APIRouter, Depends, Header, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from ...application.commands.user.user_commands import (CreateUserCommand,
-                                                        DeleteUserCommand,
-                                                        UpdateUserCommand)
-from ...application.queries.user.user_queries import (GetUserQuery,
-                                                      ListUsersQuery,
-                                                      LoginUserQuery)
+from ...application.commands.user.user_commands import (
+    ActivateUserAccountCommand, CreateUserCommand, DeleteUserCommand,
+    LogoutUserCommand, ResetPasswordCommand, UpdateUserCommand)
+from ...application.queries.user.user_queries import (
+    GetUserQuery, ListUsersQuery, LoginUserQuery, RequestPasswordResetQuery)
 from ...application.responses.user_responses import (CreateUserResponse,
                                                      GetUserResponse,
                                                      ListUsersResponse,
@@ -16,6 +15,7 @@ from ...application.responses.user_responses import (CreateUserResponse,
                                                      UpdateUserResponse)
 from ...application.services.user_service import UserService
 from ...exceptions.application import (AccountAlreadyExistsError,
+                                       AccountNotActiveError,
                                        AccountNotFoundError,
                                        DatabaseChangesPublishingError,
                                        EventPublicationError,
@@ -26,7 +26,9 @@ router = APIRouter(tags=["User"], prefix="/users")
 
 
 @router.post(
-    "/register", status_code=status.HTTP_201_CREATED, response_model=CreateUserResponse
+    "/oauth/register",
+    status_code=status.HTTP_201_CREATED,
+    response_model=CreateUserResponse,
 )
 async def register_user(
     command: CreateUserCommand,
@@ -44,7 +46,7 @@ async def register_user(
         return response
 
 
-@router.get("/me", status_code=status.HTTP_200_OK)
+@router.get("/oauth/me", status_code=status.HTTP_200_OK)
 async def me(current_user: Annotated[dict, Depends(get_current_user)]):
     return current_user
 
@@ -121,7 +123,9 @@ async def update_user(
         return response
 
 
-@router.post("/login", status_code=status.HTTP_200_OK, response_model=LoginUserResponse)
+@router.post(
+    "/oauth/login", status_code=status.HTTP_200_OK, response_model=LoginUserResponse
+)
 async def login_user(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     x_idmp_key: Annotated[str | None, Header()] = None,
@@ -136,5 +140,54 @@ async def login_user(
         response = service.login_user(query=query)
     except (InvalidCredentialsError, AccountNotFoundError):
         raise HTTPException(status_code=400, detail="Incorrect username or password")
+    except AccountNotActiveError:
+        raise HTTPException(status_code=401, detail="Account not active")
     else:
         return response
+
+
+@router.get("/oauth/logout", status_code=status.HTTP_200_OK)
+async def logout_user(
+    current_user: Annotated[dict, Depends(get_current_user)],
+    x_idmp_key: Annotated[str | None, Header()] = None,
+    service: UserService = Depends(get_user_service),
+):
+    service.logout(
+        command=LogoutUserCommand(idempotency_key=x_idmp_key), id=current_user.id
+    )
+    return current_user
+
+
+@router.get("/oauth/reset_password_request", status_code=status.HTTP_204_NO_CONTENT)
+async def reset_password_request(
+    id: str,
+    idmp_key: Annotated[str | None, Header()] = None,
+    service: UserService = Depends(get_user_service),
+):
+    service.request_password_reset(
+        query=RequestPasswordResetQuery(idempotency_key=idmp_key, id=id)
+    )
+    return
+
+
+@router.post("/oauth/reset_password", status_code=status.HTTP_204_NO_CONTENT)
+async def reset_password(
+    id: str,
+    idmp_key: Annotated[str | None, Header()] = None,
+    service: UserService = Depends(get_user_service),
+):
+    service.reset_password(
+        command=ResetPasswordCommand(idempotency_key=idmp_key, id=id)
+    )
+    return
+
+
+@router.get("/oauth/activate_account/{token}", status_code=status.HTTP_204_NO_CONTENT)
+async def activate_account(
+    token: str,
+    x_idmp_key: Annotated[str | None, Header()] = None,
+    service: UserService = Depends(get_user_service),
+):
+    service.activate_user_account(
+        command=ActivateUserAccountCommand(token=token, idempotency_key=x_idmp_key)
+    )

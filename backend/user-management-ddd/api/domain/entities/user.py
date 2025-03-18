@@ -6,6 +6,8 @@ from .base_entity import BaseEntity
 class User(BaseEntity):
     name: str
     email: str
+    is_logged_in: bool = False
+    is_active: bool = False
 
 
 class UserInDb(User):

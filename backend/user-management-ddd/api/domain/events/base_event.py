@@ -22,5 +22,8 @@ class BaseEvent(BaseModel):
         "UsersListed",
         "UserLoggedIn",
         "TokenDecoded",
+        "UserAccountActivated",
+        "PasswordResetRequested",
+        "PasswordResetConfirmed",
     ]
     detail: EventDetail
