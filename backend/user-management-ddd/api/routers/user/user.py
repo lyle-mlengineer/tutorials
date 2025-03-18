@@ -1,21 +1,26 @@
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, Header, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 
 from ...application.commands.user.user_commands import (CreateUserCommand,
                                                         DeleteUserCommand,
                                                         UpdateUserCommand)
 from ...application.queries.user.user_queries import (GetUserQuery,
-                                                      ListUsersQuery)
+                                                      ListUsersQuery,
+                                                      LoginUserQuery)
 from ...application.responses.user_responses import (CreateUserResponse,
                                                      GetUserResponse,
                                                      ListUsersResponse,
+                                                     LoginUserResponse,
                                                      UpdateUserResponse)
+from ...application.services.user_service import UserService
 from ...exceptions.application import (AccountAlreadyExistsError,
                                        AccountNotFoundError,
                                        DatabaseChangesPublishingError,
-                                       EventPublicationError)
-from ..dependencies import BaseService, get_user_service
+                                       EventPublicationError,
+                                       InvalidCredentialsError)
+from ..dependencies import BaseService, get_current_user, get_user_service
 
 router = APIRouter(tags=["User"], prefix="/users")
 
@@ -37,6 +42,11 @@ async def register_user(
         raise HTTPException(status_code=502, detail=str(e))
     else:
         return response
+
+
+@router.get("/me", status_code=status.HTTP_200_OK)
+async def me(current_user: Annotated[dict, Depends(get_current_user)]):
+    return current_user
 
 
 @router.get("/{id}", status_code=status.HTTP_200_OK, response_model=GetUserResponse)
@@ -107,5 +117,24 @@ async def update_user(
         raise HTTPException(status_code=404, detail=str(e))
     except (EventPublicationError, DatabaseChangesPublishingError) as e:
         raise HTTPException(status_code=502, detail=str(e))
+    else:
+        return response
+
+
+@router.post("/login", status_code=status.HTTP_200_OK, response_model=LoginUserResponse)
+async def login_user(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    x_idmp_key: Annotated[str | None, Header()] = None,
+    service: UserService = Depends(get_user_service),
+):
+    try:
+        query: LoginUserQuery = LoginUserQuery(
+            username=form_data.username,
+            password=form_data.password,
+            idempotency_key=x_idmp_key,
+        )
+        response = service.login_user(query=query)
+    except (InvalidCredentialsError, AccountNotFoundError):
+        raise HTTPException(status_code=400, detail="Incorrect username or password")
     else:
         return response

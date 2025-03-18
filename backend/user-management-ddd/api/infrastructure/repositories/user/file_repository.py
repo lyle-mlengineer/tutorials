@@ -2,7 +2,7 @@ import json
 import os
 from typing import Literal, Optional
 
-from ....domain.entities.user import User
+from ....domain.entities.user import User, UserInDb
 from ....domain.repositories.user_repository import UserRepository
 from ....exceptions.application import (AccountAlreadyExistsError,
                                         AccountNotFoundError)
@@ -16,6 +16,13 @@ class FileRepository(UserRepository):
         if not os.path.exists(self._memory_path):
             with open(self._memory_path, "w") as f:
                 json.dump([], f)
+        else:
+            try:
+                with open(self._memory_path, "r") as f:
+                    items = json.load(f)
+            except json.JSONDecodeError:
+                with open(self._memory_path, "w") as f:
+                    json.dump([], f)
         with open(self._memory_path, "r") as f:
             items = json.load(f)
         return items
@@ -24,11 +31,16 @@ class FileRepository(UserRepository):
         with open(self._memory_path, "w") as f:
             json.dump(contents, f, indent=4)
 
-    def get_user(self, email: str) -> Optional[User]:
+    def get_user(self, email: str) -> Optional[UserInDb]:
         items: list[dict] = self._load_file()
         for user in items:
             if user["email"] == email:
-                return User(id=user["id"], name=user["name"], email=user["email"])
+                return UserInDb(
+                    id=user["id"],
+                    name=user["name"],
+                    email=user["email"],
+                    password=user["password"],
+                )
         raise AccountNotFoundError(f"The user with email '{email}' was not found!")
 
     def create_entity(self, entity: User) -> User:
@@ -54,11 +66,16 @@ class FileRepository(UserRepository):
         self._save_file(items)
         return User(id=result["id"], name=result["name"], email=result["email"])
 
-    def get_entity(self, id: str) -> Optional[User]:
+    def get_entity(self, id: str) -> Optional[UserInDb]:
         items: list[dict] = self._load_file()
         for user in items:
             if user["id"] == id:
-                return User(id=user["id"], name=user["name"], email=user["email"])
+                return UserInDb(
+                    id=user["id"],
+                    name=user["name"],
+                    email=user["email"],
+                    password=user["password"],
+                )
         raise AccountNotFoundError(f"The user with id '{id}' was not found!")
 
     def list_entities(

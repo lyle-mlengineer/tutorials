@@ -11,3 +11,7 @@ class UserFetched(BaseEvent):
 
 class UserDeleted(BaseEvent):
     pass
+
+
+class UserLoggedIn(BaseEvent):
+    pass

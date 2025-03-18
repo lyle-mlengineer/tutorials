@@ -1,8 +1,14 @@
 from contextlib import asynccontextmanager
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from opentelemetry import trace
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import \
+    OTLPSpanExporter
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from starlette.datastructures import MutableHeaders
 
 from .routers.register_routes import register_routers
@@ -21,8 +27,24 @@ async def lifespan(app: FastAPI):
         print("Done")
 
 
+def initialize_open_telemetry(app: FastAPI) -> None:
+    # Initialize OpenTelemetry
+    trace.set_tracer_provider(TracerProvider())
+    tracer = trace.get_tracer(__name__)
+
+    # Set up OTLP exporter
+    otlp_exporter = OTLPSpanExporter(endpoint="your-otlp-endpoint")
+    span_processor = BatchSpanProcessor(otlp_exporter)
+    trace.get_tracer_provider().add_span_processor(span_processor)
+
+    # Instrument FastAPI with OpenTelemetry
+    FastAPIInstrumentor.instrument_app(app)
+    return tracer
+
+
 def create_app():
     app = FastAPI(lifespan=lifespan)
+    # tracer = initialize_open_telemetry(app)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],

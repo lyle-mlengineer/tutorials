@@ -21,3 +21,8 @@ class UpdateUserResponse(APIResponse):
     id: str
     name: str
     email: str
+
+
+class LoginUserResponse(APIResponse):
+    access_token: str
+    token_type: str

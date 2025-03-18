@@ -1,13 +1,15 @@
 from typing import Optional
 
-from ...domain.entities.user import User
+from ...domain.entities.user import Token, User
 from ...infrastructure.mediators.base_mediator import BaseMediator
 from ..commands.user.user_commands import (CreateUserCommand,
                                            DeleteUserCommand,
                                            UpdateUserCommand)
-from ..queries.user.user_queries import GetUserQuery, ListUsersQuery
+from ..queries.user.user_queries import (GetUserFromTokenQuery, GetUserQuery,
+                                         ListUsersQuery, LoginUserQuery)
 from ..responses.user_responses import (CreateUserResponse, GetUserResponse,
-                                        ListUsersResponse, UpdateUserResponse)
+                                        ListUsersResponse, LoginUserResponse,
+                                        UpdateUserResponse)
 from .base_service import BaseService
 
 
@@ -33,3 +35,12 @@ class UserService(BaseService):
 
     def list_entities(self, query: ListUsersQuery) -> ListUsersResponse:
         return self.mediator.handle_query(query)
+
+    def login_user(self, query: LoginUserQuery) -> LoginUserResponse:
+        token: Token = self.mediator.handle_query(query=query)
+        return LoginUserResponse(
+            token_type=token.token_type, access_token=token.access_token
+        )
+
+    def get_user_from_token(self, query: GetUserFromTokenQuery) -> User:
+        return self.mediator.handle_query(query=query)

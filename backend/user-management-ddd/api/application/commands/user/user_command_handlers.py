@@ -1,6 +1,4 @@
-from uuid import UUID, uuid4
-
-from ....domain.entities.user import User
+from ....domain.entities.user import User, UserInDb
 from ....domain.events.base_event import EventDetail, EventMetaData
 from ....domain.events.base_event_publisher import BaseEventPublisher
 from ....domain.events.user_events import UserCreated, UserDeleted
@@ -11,14 +9,9 @@ from ....infrastructure.caches.cache_base import CacheBase
 from ...unit_of_work_base import UnitOfWorkBase
 from ..base_command_handler import BaseCommandHandler
 from ..database_queue_writer import BaseDataBaseQueueWriter
+from .helpers import generate_id, hash_password
 from .user_commands import (CreateUserCommand, DeleteUserCommand,
                             UpdateUserCommand)
-
-
-def generate_id(prefix: str = "US") -> str:
-    raw_id: UUID = uuid4()
-    id: str = f"{prefix}-{str(raw_id)}"
-    return id
 
 
 class UnitOfWork(UnitOfWorkBase):
@@ -85,9 +78,12 @@ class CreateUserCommandHandler(BaseCommandHandler):
 
     def handle(self, command: CreateUserCommand) -> User:
         user_id: str = generate_id()
-        user: User = User(id=user_id, name=command.name, email=command.email)
+        hashed_password: str = hash_password(password=command.password)
+        user_id_db: UserInDb = UserInDb(
+            id=user_id, name=command.name, email=command.email, password=hashed_password
+        )
         with self.uow as uow:
-            uow.repository.create_entity(entity=user)
+            user: User = uow.repository.create_entity(entity=user_id_db)
             metadata: EventMetaData = EventMetaData(
                 idempotency_key=command.idempotency_key
             )

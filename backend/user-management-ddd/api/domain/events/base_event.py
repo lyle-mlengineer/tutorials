@@ -15,6 +15,12 @@ class EventDetail(BaseModel):
 class BaseEvent(BaseModel):
     source: Literal["UserService"]
     detail_type: Literal[
-        "UserCreated", "UserFetched", "UserDeleted", "UserUpdated", "UsersListed"
+        "UserCreated",
+        "UserFetched",
+        "UserDeleted",
+        "UserUpdated",
+        "UsersListed",
+        "UserLoggedIn",
+        "TokenDecoded",
     ]
     detail: EventDetail
