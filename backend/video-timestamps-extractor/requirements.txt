@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sqlalchemy
+redis
+psycopg2-binary
+pyjwt
+passlib[bcrypt]
+python-multipart
+tubectrl==0.2.3
+python-dotenv

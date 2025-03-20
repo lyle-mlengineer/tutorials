@@ -1,0 +1,66 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_USER: lyle
+      POSTGRES_PASSWORD: lyle
+      POSTGRES_DB: lyle
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+    entrypoint: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+    depends_on:
+      - db
+      - redis
+      - video_details
+      - video_timestamps
+
+  video_details:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+      - YOUTUBE_CREDENTIALS_PATH=credentials.json
+    entrypoint: ["python", "worker.py"]
+    depends_on:
+      - db
+      - redis
+
+  video_timestamps:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+      - YOUTUBE_CREDENTIALS_PATH=credentials.json
+    entrypoint: ["python", "timestamps.py"]
+    depends_on:
+      - db
+      - redis
+      - video_details
+
+volumes:
+  db_data:
