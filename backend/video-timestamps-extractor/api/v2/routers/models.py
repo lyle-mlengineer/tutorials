@@ -1,8 +1,16 @@
 from pydantic import BaseModel
 
 
-class VideoUrl(BaseModel):
+class Url(BaseModel):
     url: str
+
+
+class VideoUrl(Url):
+    pass
+
+
+class PlaylistUrl(Url):
+    pass
 
 
 class VideoUrls(BaseModel):

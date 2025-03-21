@@ -1,8 +1,8 @@
 from fastapi import APIRouter, status
 
-from .models import VideoUrls, VideoUrl, VideoTimestampsDataset
-from .utils import write_videos_to_redis_queue
 from .database import get_video_timestamps
+from .models import VideoTimestampsDataset, VideoUrl, VideoUrls
+from .utils import write_videos_to_redis_queue
 
 video_router = APIRouter(prefix="/videos", tags=["Video"])
 

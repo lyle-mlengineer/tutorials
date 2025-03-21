@@ -60,7 +60,21 @@ services:
     depends_on:
       - db
       - redis
+      - playlists
       - video_details
+
+  playlists:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+      - YOUTUBE_CREDENTIALS_PATH=credentials.json
+    entrypoint: ["python", "playlist_processor.py"]
+    depends_on:
+      - db
+      - redis
 
 volumes:
   db_data:

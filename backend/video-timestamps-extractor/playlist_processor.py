@@ -2,6 +2,7 @@ import itertools
 import json
 import os
 from abc import ABC, abstractmethod
+from typing import Iterator
 
 import redis
 from pydantic import BaseModel
@@ -11,7 +12,7 @@ from sqlalchemy.dialects.sqlite import JSON
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import declarative_base, sessionmaker
 from tubectrl import YouTube
-from tubectrl.models import Video
+from tubectrl.models import PlaylistItem
 
 
 class BaseConfig:
@@ -19,7 +20,7 @@ class BaseConfig:
     REDIS_HOST: str = os.environ.get("REDIS_HOST", "localhost")
     REDIS_PORT: int = os.environ.get("REDIS_PORT", 6379)
     REDIS_DB: int = os.environ.get("REDIS_DB", 0)
-    REDIS_VIDEOS_QUEUE: str = os.environ.get("REDIS_VIDEOS_QUEUE", "videos")
+    REDIS_PLAYLIST_QUEUE: str = os.environ.get("REDIS_PLAYLIST_QUEUE", "playlists")
     REDIS_TIMESTAMPS_QUEUE: str = os.environ.get("REDIS_TIMESTAMPS_QUEUE", "timestamps")
 
     POSTGRES_USER = os.environ.get("POSTGRES_USER", "lyle")
@@ -116,7 +117,7 @@ class RedisQueueService:
         redis_host: str = BaseConfig.REDIS_HOST,
         redis_port: int = BaseConfig.REDIS_PORT,
         redis_db: int = BaseConfig.REDIS_DB,
-        redis_queue: str = BaseConfig.REDIS_VIDEOS_QUEUE,
+        redis_queue: str = BaseConfig.REDIS_PLAYLIST_QUEUE,
     ):
         self.youtube = self._get_youtube(client_secret_file=client_secret_file)
         self.redis = redis.Redis(host=redis_host, port=redis_port, db=redis_db)
@@ -139,23 +140,32 @@ class RedisQueueService:
             youtube.authenticate(client_secret_file)
         return youtube
 
-    def _filter_video_ids(self, video_ids: list[str]) -> list[str]:
-        video_ids: list[str] = list(
-            itertools.filterfalse(self.repository.video_in_repository, video_ids)
-        )
-        return video_ids
-
-    def _find_videos(self, video_ids: list[str]) -> list[Video]:
+    def _process_playlist(self, playlist_id: str) -> None:
         try:
-            videos: list[Video] = self.youtube.find_videos_by_ids(video_ids=video_ids)
+            iterator: Iterator = self.youtube.get_playlist_items_iterator(
+                playlist_id=playlist_id
+            )
+            for playlist_items in iterator:
+                video_descriptions: list[VideoDescription] = list(
+                    map(self._get_video_description, playlist_items)
+                )
+                for video_description in video_descriptions:
+                    if not self.repository.video_in_repository(
+                        video_description.video_id
+                    ):
+                        self._save_video_description(video_description)
+                self._enqueue_videos(
+                    [
+                        video_description.video_id
+                        for video_description in video_descriptions
+                    ]
+                )
         except:
             self.redis.hset(name="quota", key="quota_exceeded", value="true")
-            return []
-        return videos
 
-    def _get_video_description(self, data: tuple[str, Video]) -> str:
-        video_id, video = data
-        description: str = video.snippet.description
+    def _get_video_description(self, playlist_item: PlaylistItem) -> VideoDescription:
+        description: str = playlist_item.snippet.description
+        video_id: str = playlist_item.snippet.resourceId.videoId
         return VideoDescription(video_id=video_id, description=description)
 
     def _save_video_description(self, video_description: VideoDescription) -> None:
@@ -179,21 +189,11 @@ class RedisQueueService:
             while True:
                 # Blocking pop to wait for new messages
                 metadata = self.redis.brpop(self.redis_queue)
-                video_ids: dict[str, list[str]] = json.loads(
-                    metadata[1].decode("utf-8")
-                )
-                video_ids: list[str] = video_ids["video_ids"]
-                video_ids = self._filter_video_ids(video_ids)
-                print(video_ids)
-                if video_ids:
-                    videos: list[Video] = self._find_videos(video_ids=video_ids)
-                    if videos:
-                        video_descriptions: list[VideoDescription] = list(
-                            map(self._get_video_description, zip(video_ids, videos))
-                        )
-                        for video_description in video_descriptions:
-                            self._save_video_description(video_description)
-                        self._enqueue_videos(video_ids)
+                playlist_id: dict[str, str] = json.loads(metadata[1].decode("utf-8"))
+                print(playlist_id)
+                playlist_id: str = playlist_id["playlist_id"]
+                print(playlist_id)
+                self._process_playlist(playlist_id=playlist_id)
         except KeyboardInterrupt:
             print("Shutting down")
 

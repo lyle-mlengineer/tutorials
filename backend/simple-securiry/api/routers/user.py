@@ -4,7 +4,7 @@ from fastapi import (APIRouter, Depends, Header, HTTPException, Response,
                      Security, status)
 from fastapi.security import OAuth2PasswordRequestForm
 
-from .dependencies import (UserService, get_current_logged_in_user,
+from .dependencies import (UserService, get_current_logged_in_user, check_authorization,
                            get_user_service)
 from .exceptions import (AccountAlreadyExistsError, AccountNotFoundError,
                          InvalidCredentialsError)
@@ -49,6 +49,10 @@ def login(
             headers={"WWW-Authenticate": "Bearer"},
         )
     return reponse
+
+@user_router.get("/authority")
+def test(_ : Annotated[None, Security(check_authorization, scopes=["own:read"])]):
+    return {'hello': 'auth passed'}
 
 
 @user_router.get(

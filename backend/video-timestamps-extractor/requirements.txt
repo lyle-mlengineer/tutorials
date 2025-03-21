@@ -6,5 +6,5 @@ psycopg2-binary
 pyjwt
 passlib[bcrypt]
 python-multipart
-tubectrl==0.2.3
+tubectrl==0.4.0
 python-dotenv

@@ -64,3 +64,56 @@ async def get_current_logged_in_user(
     except InvalidTokenError:
         raise credentials_exception
     return service.get_user(query=GetUserQuery(id=user_id))
+
+class AuthorizationService:
+    def check_authorization(self, security_scopes: SecurityScopes, auth_token: str) -> None:
+        if security_scopes.scopes:
+            authenticate_value = f'Bearer scope="{security_scopes.scope_str}"'
+        else:
+            authenticate_value = "Bearer"
+        if not auth_token:
+            HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Missing authorization headers.",
+                headers={"WWW-Authenticate": authenticate_value},
+            )
+        try:
+            token: str = auth_token.split()[-1]
+        except IndexError:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=f"Invalid authorization header format: {auth_token}",
+                headers={"WWW-Authenticate": authenticate_value},
+            )
+        credentials_exception = HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": authenticate_value},
+        )
+        try:
+            payload: dict = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        except InvalidTokenError:
+            raise credentials_exception
+        user_id: str = payload.get("sub")
+        if user_id is None:
+            raise credentials_exception
+        scopes: list[str] = payload.get("scopes", [])
+        for scope in security_scopes.scopes:
+            if scope not in scopes:
+                raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="Not enough permissions",
+                        headers={"WWW-Authenticate": authenticate_value},
+                    )      
+            
+def get_authorization_service() -> AuthorizationService:
+    return AuthorizationService()
+
+
+async def check_authorization(
+        security_scopes: SecurityScopes,
+        authorization: Annotated[str | None, Header()],
+        authorization_service: AuthorizationService = Depends(get_authorization_service)
+) -> None:
+    authorization_service.check_authorization(security_scopes=security_scopes, auth_token=authorization)
+    
