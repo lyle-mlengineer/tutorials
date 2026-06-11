@@ -1,0 +1,7 @@
+modal
+requests
+librosa
+soundfile
+fastapi[standard]
+pydantic
+uvicorn

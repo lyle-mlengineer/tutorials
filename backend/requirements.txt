@@ -1,0 +1,16 @@
+fastapi[standard]
+uvicorn
+sqlalchemy
+alembic
+psycopg2-binary
+pydantic-settings
+jinja2
+python-multipart
+oryks-google-drive
+requests
+stripe
+pyjwt
+authlib
+itsdangerous
+pwdlib[argon2]
+tenacity
