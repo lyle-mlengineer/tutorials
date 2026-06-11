@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 import modal
 from pydantic import BaseModel
-import json
 
 import logging
 
@@ -16,6 +16,7 @@ OUTPUT_VOLUME_NAME = "outputs"
 SECRET_NAME = "ssflow"
 CACHE_DIR = "/cache"
 OUTPUT_DIR = "/output"
+DATA_DIR = "/data"
 
 APP_NAME = "fastapi-modal-app"
 APP_VERSION = "0.1.0"
@@ -39,6 +40,7 @@ image = (
     .run_function(init_function, gpu=GPU)
     .add_local_file("/home/lyle/.drive/credentials.json", "/root/.drive/credentials.json", copy=True)
     .add_local_dir("config/", "/root/config", copy=True)
+    .add_local_dir("data/", remote_path="/data", copy=True)
     .env({
         "CONFIG_DIR": "/root/config",
         "GOOGLE_DRIVE_CREDENTIALS": "/root/.drive/credentials.json",
@@ -59,9 +61,6 @@ class FileWriteRequest(BaseModel):
 class FileWriteResponse(BaseModel):
     file_path: str
 
-class FileReadRequest(BaseModel):
-    file_name: str
-
 class FileReadResponse(BaseModel):
     content: str
 
@@ -78,6 +77,13 @@ def read_file(file_name):
     with open(file_path, "r") as f:
         content = f.read()
     return FileReadResponse(content=content)
+
+def write_data(name, content):
+    file_name = f"{name}_data.txt"
+    file_path = f"{DATA_DIR}/{file_name}"
+    with open(file_path, "w") as f:
+        f.write(content)
+    return FileWriteResponse(file_path=file_path)
 
 # 2. Build your FastAPI application locally inside a wrapper function
 @app.function(image=image)
@@ -99,6 +105,12 @@ def fastapi_wrapper():
         allow_headers=["*"],
     )
 
+    web_app.mount(
+        "/data", 
+        StaticFiles(directory="/data"), 
+        name="data"
+    )
+
     @web_app.get("/")
     def read_root():
         return {"message": "Hello from serverless FastAPI on Modal!"}
@@ -114,5 +126,11 @@ def fastapi_wrapper():
         """
         Endpoint to read content from a file in the output volume."""
         return read_file(file_name)
-        
+    
+    @web_app.post("/write-data", response_model=FileWriteResponse)
+    def write_data_endpoint(request: FileWriteRequest):
+        """
+        Endpoint to write data to a file in the output volume."""
+        return write_data(request.name, request.content)
+
     return web_app
