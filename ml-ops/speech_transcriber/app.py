@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles
 import modal
 from pydantic import BaseModel
 import logging
+from contextlib import asynccontextmanager
+import transformers
 
 
 GPU = "T4"
@@ -16,10 +18,27 @@ OUTPUT_DIR = "/output"
 DATA_DIR = "/data"
 
 APP_NAME = "fastapi-modal-app"
+MODEL_NAME = "openai/whisper-medium"
+LANGUAGE: str = "sw"
+TASK: str = "transcribe"
 
 def init_function():
     logging.info("Initializing the remote container...")
-    # Perform any necessary setup here, such as downloading models or initializing resources
+    feature_extractor = transformers.WhisperFeatureExtractor.from_pretrained(
+        pretrained_model_name_or_path=MODEL_NAME,
+    )
+    tokenizer = transformers.WhisperTokenizer.from_pretrained(
+        pretrained_model_name_or_path=MODEL_NAME,
+    )
+    model = transformers.WhisperForConditionalGeneration.from_pretrained(
+        pretrained_model_name_or_path=MODEL_NAME,
+    )
+
+    # Create a processor that combines the feature extractor and tokenizer
+    processor = transformers.WhisperProcessor(
+        feature_extractor=feature_extractor,
+        tokenizer=tokenizer,
+    )
 
 cache_volume = modal.Volume.from_name(CACHE_VOLUME_NAME, create_if_missing=True)
 output_volume = modal.Volume.from_name(OUTPUT_VOLUME_NAME, create_if_missing=True)
@@ -38,6 +57,36 @@ image = (
 
     })
 )
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logging.info("Starting application...")
+    # init_app(app)
+    feature_extractor = transformers.WhisperFeatureExtractor.from_pretrained(
+        pretrained_model_name_or_path=MODEL_NAME,
+    )
+    tokenizer = transformers.WhisperTokenizer.from_pretrained(
+        pretrained_model_name_or_path=MODEL_NAME,
+    )
+    model = transformers.WhisperForConditionalGeneration.from_pretrained(
+        pretrained_model_name_or_path=MODEL_NAME,
+    )
+
+    # Create a processor that combines the feature extractor and tokenizer
+    processor = transformers.WhisperProcessor(
+        feature_extractor=feature_extractor,
+        tokenizer=tokenizer,
+    )
+    app.state.model = model
+    app.state.processor = processor
+    # yield {
+    #     "model": model,
+    #     "processor": processor
+    # }
+    yield
+    logging.info("Shutting down application...")
+    del app.state.model
+    del app.state.processor
 
 app = modal.App(
     APP_NAME, 
@@ -67,7 +116,9 @@ def fastapi_wrapper():
         title=settings.APP_NAME, 
         version=settings.APP_VERSION, 
         description=settings.APP_DESCRIPTION, 
-        summary=settings.APP_SUMMARY)
+        summary=settings.APP_SUMMARY,
+        lifespan=lifespan
+    )
     
     # Configure middleware or routers
     web_app.add_middleware(

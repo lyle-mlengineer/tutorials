@@ -6,3 +6,6 @@ fastapi[standard]
 pydantic
 uvicorn
 aiofiles
+torch
+torchcodec
+transformers

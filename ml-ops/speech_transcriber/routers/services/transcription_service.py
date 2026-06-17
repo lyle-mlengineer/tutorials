@@ -5,6 +5,7 @@ import aiofiles
 from core.config import settings as config
 from routers.schemas import TranscriptionResponse
 from fastapi import Request
+import librosa
 
 
 class TranscriptionService:
@@ -28,11 +29,29 @@ class TranscriptionService:
         finally:
             # Ensure the temporary file is closed
             await file.close()
-        return file_url
+        return file_path, file_url
+    async def _transcribe(self, audio_path: str, processor, model) -> str:
+        """Transcribe audio file."""
+        model_sample_rate = processor.feature_extractor.sampling_rate
 
-    async def transcribe(self, file: UploadFile, request: Request) -> TranscriptionResponse:
-        file_url = await self.save_file(file, request)
-        # self.load_model()
-        # result = self.model(audio_file_path)
-        # return result["text"]
-        return TranscriptionResponse(transcription="Sample transcription", audio_url=file_url)
+        # load audio file
+        audio_data, sample_rate = librosa.load(audio_path, sr=model_sample_rate)
+
+        input_features = processor(
+            audio_data,
+            sampling_rate=sample_rate,
+            return_tensors="pt",
+        ).input_features
+
+        # generate tokens -> decode to text
+        predicted_ids = model.generate(input_features, language="sw", task="transcribe")
+        transcription = processor.batch_decode(
+            predicted_ids, skip_special_tokens=True
+        )[0]
+        return transcription
+
+    async def transcribe(self, file: UploadFile, request: Request, model, processor) -> TranscriptionResponse:
+        file_path, file_url = await self.save_file(file, request)
+        
+        transcription_text = await self._transcribe(file_path, processor, model)
+        return TranscriptionResponse(transcription=transcription_text, audio_url=file_url)

@@ -5,3 +5,6 @@ soundfile
 fastapi[standard]
 pydantic
 uvicorn
+torch
+torchcodec
+transformers
