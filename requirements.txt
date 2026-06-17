@@ -1,0 +1,6 @@
+modal
+fastapi[standard]
+pydantic
+uvicorn
+pydantic-settings
+aiofiles
