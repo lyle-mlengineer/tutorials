@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --primary-color: #2356FF;
+    --secondary-color: #7657FF;
+    --light-secondary-color: #8DA7FC;
+    --gray-bg-color: #F9F9F9;
+    --gray-border-color: #DDDDDD;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #F2F5FF, #E8E2FF);
+}
+
+/* START THE CODE BELOW */
+
+.container {
+    background: white;
+    padding: 25px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 700px;
+}
+
+.title{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.title__icon{
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    fill: white;
+    min-width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px var(--light-secondary-color);
+}
+
+.title__text{
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.form-and-image{
+    display: flex;
+    margin-top: 24px;
+    gap: 32px;
+}
+
+/* FORM CONTAINER */
+.form-container{
+    /* border: 1px solid blue; */
+    width: 100%;
+}
+
+.form-container__prompt-input{
+    width: 100%;
+    padding: 8px 10px;
+    border: 1.5px solid var(--gray-border-color);
+    border-radius: 8px;
+    resize: none;
+    background: var(--gray-bg-color);
+    outline: solid 3px transparent;
+    transition: 150ms ease-in;
+}
+
+.form-container__prompt-input:focus{
+    outline: 3px solid var(--light-secondary-color);
+}
+
+.form-container__dropdown-group{
+    /* border: solid; */
+    margin-top: 8px;
+    display: flex;
+    gap: 12px;
+}
+
+.form-container__dropdown{
+    padding: 8px 10px;
+    outline: 3px solid transparent;
+    border: 2px solid var(--gray-border-color);
+    border-radius: 8px;
+    background: var(--gray-bg-color);
+    outline: solid 3px transparent;
+    transition: 150ms ease-in;
+}
+
+.form-container__dropdown:focus{
+    outline: 3px solid var(--light-secondary-color);
+}
+
+.form-container__button{
+    margin-top: 16px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    fill: white;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    outline: 3px solid transparent;
+    transition: 150ms ease;
+}
+
+.form-container__button:focus{
+    outline: 3px solid var(--light-secondary-color);
+}
+
+.form-container__button:hover{
+    box-shadow: 2px 4px 20px var(--light-secondary-color);
+}
+
+/* IMAGE CONTAINER */
+.image-container{
+    /* border: 1px solid green; */
+    aspect-ratio: 1/1;
+    width: 65%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    position: relative;
+}
+
+.image-container:hover .image-container__image-result{
+    transform: scale(1.1);
+    transition: 300ms ease-in;
+}
+
+.image-container:hover .image-container__layer{
+    opacity: 1;
+    transition: 300ms ease-in;
+}
+
+.image-container:hover .image-container__download-button{
+    opacity: 1;
+    transition: 300ms ease-in;
+    bottom: 12px;
+}
+
+.image-container__image-result{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-container__layer{
+    opacity: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0));
+}
+
+.image-container__download-button{
+    opacity: 0;
+    position: absolute;
+    bottom: 0px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: rgba(255, 255, 255, 0.25);
+    fill: white;
+    cursor: pointer;
+}
+
+
+@media screen and (max-width: 768px){
+
+    .container{
+        overflow-y: scroll;
+        max-block-size: 90%;
+    }
+
+    .form-and-image{
+        flex-direction: column;
+    }
+
+    .image-container{
+        width: 100%;
+    }
+
+    .image-container__download-button{
+        margin: 10px;
+        transform: scale(1.1);
+    }
+}
