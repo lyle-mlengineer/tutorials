@@ -1,6 +1,11 @@
 modal
 fastapi[standard]
+python-multipart
 pydantic
 uvicorn
 pydantic-settings
 aiofiles
+torch
+torch-codec
+requests
+pillow

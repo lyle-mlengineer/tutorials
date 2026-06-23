@@ -196,6 +196,35 @@ body {
     cursor: pointer;
 }
 
+.image-container__loading-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+}
+
+.image-container__loading-spinner{
+    width: 70px;
+    height: 70px;
+}
+
+.image-container__loading-text{
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+/* When image is generated */
+.image-container.loading {
+    box-shadow: none;
+    background: var(--gray-bg-color);
+}
+
+.image-container.loading .image-container__layer,
+.image-container.loading .image-container__download-button{
+    display: none;
+}
+
 
 @media screen and (max-width: 768px){
 

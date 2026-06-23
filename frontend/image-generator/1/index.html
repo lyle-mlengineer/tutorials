@@ -28,17 +28,24 @@
                 <textarea class="form-container__prompt-input" id="prompt" rows="5"
                     placeholder="Describe your image..."></textarea>
                 <div class="form-container__dropdown-group">
-                    <!-- DROPDOWN STYLE -->
-                    <select class="form-container__dropdown" id="dropdownStyles">
-                        <option value="realistic">Realistic</option>
-                        <option value="anime">Anime</option>
-                        <option value="flux-schnell">Flux Schnell</option>
+                    <!-- DROPDOWN COLOR -->
+                    <select class="form-container__dropdown" id="dropdownColors">
+                        <option value="red">Red</option>
+                        <option value="green">Green</option>
+                        <option value="blue">Blue</option>
                     </select>
-                    <!-- DROPDOWN RATIO -->
-                    <select class="form-container__dropdown" id="dropdownRatio">
-                        <option value="1:1">1:1</option>
-                        <option value="16:9">16:9</option>
-                        <option value="9:16">9:16</option>
+                    <!-- SIZE RATIO -->
+                    <select class="form-container__dropdown" id="dropdownSize">
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="300">300</option>
+                        <option value="400">400</option>
+                        <option value="500">500</option>
+                    </select>
+                    <!-- DROPDOWN FORMAT -->
+                    <select class="form-container__dropdown" id="dropdownFormats">
+                        <option value="jpeg">JPEG</option>
+                        <option value="png">PNG</option>
                     </select>
                 </div>
                 <!-- GENERATE IMAGE BUTTON -->
@@ -59,7 +66,7 @@
                 </button>
 
                 <!-- LOADING CONTAINER -->
-                <!-- <div class="image-container__loading-container">
+                <div class="image-container__loading-container">
                     <svg class="image-container__loading-spinner" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 200 200">
                         <radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)">
@@ -80,7 +87,7 @@
                             stroke-linecap="round" cx="100" cy="100" r="70"></circle>
                     </svg>
                     <span class="image-container__loading-text">Generating Image ...</span>
-                </div> -->
+                </div>
             </section>
         </div>
     </main>
