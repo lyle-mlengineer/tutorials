@@ -1,4 +1,4 @@
-const API_KEY = ''; // Paste your API Key
+const API_KEY = '1234'; // Paste your API Key
 const API_URL = 'http://0.0.0.0:8000/generate-image';
 
 const imageContainer = document.getElementById('imageContainer');
@@ -41,13 +41,15 @@ function generateImage() {
         })
         .then((blob) => {
             const url = URL.createObjectURL(blob);
-            const imageElement = document.createElement('img');
-            imageElement.src = url;
-            imageElement.onload = () => {
-                imageContainer.innerHTML = '';
-                imageContainer.appendChild(imageElement);
-                setLoadingState(false);
-            };
+            // const imageElement = document.createElement('img');
+            // imageElement.src = url;
+            // imageElement.onload = () => {
+            //     imageContainer.innerHTML = '';
+            //     imageContainer.appendChild(imageElement);
+            //     setLoadingState(false);
+            // };
+            imageResultElement.src = url;
+            setLoadingState(false);
         })
         .catch((error) => {
             console.error(error);
@@ -66,6 +68,9 @@ function setLoadingState(isLoading) {
 }
 
 function downloadImage() {
-
-
+    const imageUrl = imageResultElement.src;
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = 'image.png';
+    link.click();
 }
