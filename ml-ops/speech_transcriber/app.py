@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import modal
-from pydantic import BaseModel
 import logging
 from contextlib import asynccontextmanager
 import transformers
@@ -79,10 +78,6 @@ async def lifespan(app: FastAPI):
     )
     app.state.model = model
     app.state.processor = processor
-    # yield {
-    #     "model": model,
-    #     "processor": processor
-    # }
     yield
     logging.info("Shutting down application...")
     del app.state.model
