@@ -2,6 +2,7 @@ const API_KEY = '1234'; // Paste your API Key
 const API_URL = 'http://0.0.0.0:8002/api/v1/extract';
 
 const timestampsPre = document.getElementById('timestampsPre');
+const imageResult = document.getElementById('imageResult');
 
 function extractTimestamps(){
     const urlInput = document.getElementById('videoUrl').value.trim();
@@ -30,9 +31,35 @@ function extractTimestamps(){
         .then((data) => {
             const timestamps = data.timestamps;
             console.log(timestamps);
+            imageResult.src = data.thumbnail_url; // Set the thumbnail image
             timestampsPre.textContent = JSON.stringify(data.timestamps, null, 2); // Display timestamps in the pre element
         })
         .catch((error) => {
             console.error('Error:', error);
         });
+}
+
+function copyTimestamps(){
+    const timestampsText = timestampsPre.textContent;
+
+    navigator.clipboard.writeText(timestampsText)
+    .then(() => {
+        alert('Timestamps copied to clipboard!');
+    })
+    .catch(err => {
+        console.error('Failed to copy timestamps: ', err);
+    });
+}
+
+function downloadTimestamps() {
+    const timestampsText = timestampsPre.textContent;
+    const blob = new Blob([timestampsText], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'timestamps.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
