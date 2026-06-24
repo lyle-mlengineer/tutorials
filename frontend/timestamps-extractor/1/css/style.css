@@ -211,3 +211,34 @@ body {
     transition: 150ms ease;
     width: 100%;
 }
+
+
+
+
+@media screen and (max-width: 568px) {
+    .container{
+        max-height: 90%;
+        overflow-y: scroll;
+    }
+
+    .form-container{
+        flex-direction: column;
+    }
+
+    .extraction-container__timestamps-result{
+        flex-direction: column;
+    }
+
+    .image-container{
+        width: 100%;
+    }
+
+    .timestamps-container{
+        min-height: 250px;
+        overflow-y: scroll;
+    }
+
+    .extraction-container__actions{
+        flex-direction: column;
+    }
+}
