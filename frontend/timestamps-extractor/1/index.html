@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timestamps Extractor</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Link to Box Icons -->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+</head>
+<body>
+    
+    <main class="container">
+        <!-- TITLE -->
+        <h1 class="title">
+            <box-icon class="title__icon" type='solid' name='magic-wand'></box-icon>
+            <span class="title__text">Timestamps Extractor</span>
+        </h1>
+
+        <section class="form-container">
+            <input class="form-container__input" type="text" placeholder="Paste your text here ...">
+            <button class="form-container__button" onclick="extractTimestamps()">
+                <box-icon type='solid' name='magic-wand'></box-icon>
+                Extract Timestamps
+            </button>
+        </section>
+
+        <!-- EXTRACTED TIMESTAMPS CONTAINER -->
+        <section class="extraction-container" id="extractionContainer">
+
+
+            <!-- EXTRACTED TIMESTAMPS RESULT -->
+            <div class="extraction-container__timestamps-result">
+
+                <section class="image-container" id="imageContainer">
+
+                    <!-- IMAGE RESULT -->
+                    <div class="image-container__image-result" id="imageResultContainer">
+                        <img class="image-container__image-result-image show" id="imageResult" src="img/example.jpeg">
+                    </div>
+
+                    <div class="image-container__loading-container" id="loadingContainer">
+                        <div class="image-container__loading-spinner"></div>
+                    </div>
+
+                    <!-- ERROR MESSAGE -->
+                    <div class="image-container__error-message" id="errorMessage">
+                        <box-icon type='solid' name='error-circle'></box-icon>
+                        <span class="image-container__error-text" id="errorText">
+                            The YouTube video was not found.
+                        </span>                           
+                    </div>
+
+                </section>
+
+                <section class="timestamps-container" id="timestampsContainer">
+                    <div class="timestamps-container__loading-container" id="timestampsLoadingContainer">
+                        <div class="timestamps-container__loading-spinner"></div>
+                    </div>
+                    <pre id="timestampsPre"></pre>
+                </section>
+
+            </div>
+
+            <!-- EXTRACTION ACTIONS-->
+            <div class="extraction-container__actions" id="extractionActions">
+                <button class="extraction-container__copy-button btn" onclick="copyTimestamps()" id="copyTimestampsButton">
+                <i class="ri-copy-line"></i>
+                Copy Timestamps
+                </button>
+                <button class="extraction-container__download-button btn" onclick="downloadTimestamps()" id="downloadTimestampsButton">
+                    <i class="ri-download-line"></i>
+                    Download Timestamps
+                </button>
+            </div>
+
+        </section>
+    </main>
+</body>
+</html>
