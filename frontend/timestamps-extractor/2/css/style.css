@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --primary-color: #2356FF;
+    --secondary-color: #7657FF;
+    --light-secondary-color: #8DA7FC;
+    --gray-bg-color: #F9F9F9;
+    --gray-border-color: #DDDDDD;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #F2F5FF, #E8E2FF);
+}
+
+/* START THE CODE BELOW */
+
+.container {
+    background: white;
+    padding: 25px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 700px;
+}
+
+.title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.title__icon{
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    fill: white;
+    min-width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px var(--light-secondary-color);
+}
+
+.title__text{
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.btn{
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    fill: white;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    outline: 3px solid transparent;
+    transition: 150ms ease;
+}
+
+.form-container{
+    /* border: 1px solid blue; */
+    width: 100%;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group{
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 2fr;
+}
+
+.custom-input{
+    width: 100%;
+}
+
+.custom-input input,
+.custom-input select{
+    color: #1d1d1d;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    height: 46px;
+    letter-spacing: 0.03rem;
+    border: 1px solid #1d1d1d;
+    background: transparent;
+    outline: none;
+    border-radius: 8px;
+    text-indent: 20px;
+    margin-top: 6px;
+    transition: all 0.3s ease;
+}
+
+.form-container__button{
+    /* border: solid; */
+    display: flex;
+    justify-content: center;
+}
+
+.form-container__button button{
+    width: 50%;
+}
+
+@media screen and (max-width: 320px){
+    .title__text{
+        font-size: 24px;
+    }
+
+    .create_dataset-button span{
+        display: none;
+    }
+
+    .form-group{
+        grid-template-columns: 1fr;
+    }
+}
