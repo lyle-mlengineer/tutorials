@@ -68,11 +68,63 @@
                     </button>
                     
                 </div>
+
+                <div class="extraction-container__loading-container" id="loadingContainer">
+                    <div class="extraction-container__loading-spinner"></div>
+                    <span>Searching...</span>
+                </div>
             </div>
 
         </div>
 
     </main>
+
+    <div class="extraction-modal modal">
+        <div class="modal__content">
+            <div class="modal__header">
+               <h3>Extract Timestamps</h3>
+            </div>
+            <div class="modal__body">
+                <p class="modal__decription">
+                    <span>"Video Title"</span> scheduled for extraction!
+                </p>
+                <div class="image-container" id="imageResultContainer">
+                    <img class="image-container__image-result-image show" id="imageResult" src="img/example.jpeg">
+                </div>
+                <div class="modal__actions">
+                    <button class="btn" id="confirmBtn">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dataset-creation-modal modal">
+        <div class="modal__content">
+            <div class="modal__header">
+               <h3>Create Dataset</h3>
+            </div>
+            <div class="modal__body">
+                <div class="form-group">
+                    <label for="dataset">Name:</label>
+                    <div class="custom-input">
+                        <select class="form-container__dropdown" id="dataset">
+                            <option value="default">Default</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="dataset">Description:</label>
+                    <div class="custom-input">
+                        <textarea name="" id="" rows="5" placeholder="Describe your dataset..."></textarea>
+                    </div>
+                </div>
+                <div class="modal__actions">
+                    <button class="btn" id="confirmBtn">Create</button>
+                    <button class="btn" id="confirmBtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
 </body>
 </html>
