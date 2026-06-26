@@ -170,7 +170,7 @@ body {
     object-fit: cover;
 }
 
-.image-container__layer{
+.image-container__layer{ 
     opacity: 0;
     position: absolute;
     bottom: 0;

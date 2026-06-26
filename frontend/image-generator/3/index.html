@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Labeller</title>
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Link to Box Icons -->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+</head>
+<body>
+
+    <!-- CONTAINER -->
+    <main class="container">
+        <!-- TITLE -->
+        <div class="title">
+            <div class="title__logo">
+                <box-icon class="title__icon" type='solid' name='magic-wand'></box-icon>
+                <span class="title__text">Image Labeller</span>
+            </div>
+
+            <div class="title__action">
+                <button class="create_dataset-button btn" id="createDatasetBtn">
+                    <box-icon name='plus'></box-icon>
+                    <span>Upload</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-and-image">
+            <!-- IMAGE CONTAINER -->
+            <section class="image-container" id="imageContainer">
+                <!-- IMAGE RESULT -->
+                <img class="image-container__image-result" id="imageResult" src="img/example.jpeg">
+
+                <div class="image-container__layer"></div>
+                <button class="image-container__edit-button" onclick="editImage()">
+                    <box-icon name='edit'></box-icon>
+                </button>
+            </section>
+
+            <!-- FORM CONTAINER -->
+            <section class="form-container">
+                <!-- PROMPT INPUT -->
+                <textarea class="form-container__prompt-input" id="prompt" rows="7"
+                    placeholder="Describe your image..."></textarea>
+
+                <div class="image-container__image-tags">
+                    <div class="image-tags__tag" id="tag1">
+                        Bald
+                    </div>
+                    <div class="image-tags__tag" id="tag2">
+                        Beard
+                    </div>
+                    <div class="image-tags__tag" id="tag3">
+                        Mustache
+                    </div>
+                    <div class="image-tags__tag" id="tag4">
+                        Glasses
+                    </div>
+                    <div class="image-tags__tag" id="tag5">
+                        Hat
+                    </div>
+                </div>
+
+                <div class="form-container__dropdown-group">
+                    <!-- DROPDOWN GENDER -->
+                    <select class="form-container__dropdown form-input" id="dropdownGender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+
+                    <button class="create_dataset-button btn form-input" id="createDatasetBtn">
+                        <!--TAG BUTTON-->
+                        <box-icon name='plus'></box-icon>
+                        <span>Tag</span>
+                    </button>
+                </div>
+                <!-- SUBMIT IMAGE BUTTON -->
+                <button class="form-container__button" onclick="submitImage()">
+                    <box-icon type='solid' name='magic-wand'></box-icon>
+                    Submit Image
+                </button>
+            </section>
+        </div>
+    </main>
+
+    <div class="tag-modal modal">
+        <div class="modal__content">
+            <div class="modal__header">
+               <h3>Tag Image</h3>
+            </div>
+            <div class="modal__body">
+                <div class="form-group">
+                    <label for="dataset">Name</label>
+                    <div class="custom-input tags">
+                        <input type="text" id="imageTagsInput" placeholder="Select or type..." autocomplete="off">
+                        <ul id="imageTagsList" class="image-tags hidden">
+                            <li class="image-tag">Chocolate</li>
+                            <li class="image-tag">Vanilla</li>
+                            <li class="image-tag">Strawberry</li>
+                            <li class="image-tag">Mint Chip</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal__actions">
+                    <button class="btn" id="confirmBtn">Create</button>
+                    <button class="btn" id="confirmBtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/app.js"></script>
+</body>
+</html>
