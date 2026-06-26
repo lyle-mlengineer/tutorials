@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Labeller</title>
     <!-- Link to CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <!-- Link to Box Icons -->
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </head>
@@ -32,7 +32,8 @@
             <!-- IMAGE CONTAINER -->
             <section class="image-container" id="imageContainer">
                 <!-- IMAGE RESULT -->
-                <img class="image-container__image-result" id="imageResult" src="img/example.jpeg">
+                <img class="image-container__image-result" id="imageResult" data-image-id="{{ image_id }}"
+                src="{{ image_src }}">
 
                 <div class="image-container__layer"></div>
                 <button class="image-container__edit-button" onclick="editImage()">
@@ -78,7 +79,7 @@
                     </button>
                 </div>
                 <!-- SUBMIT IMAGE BUTTON -->
-                <button class="form-container__button" onclick="submitImage()">
+                <button class="form-container__button" onclick="submit()">
                     <box-icon type='solid' name='magic-wand'></box-icon>
                     Submit Image
                 </button>
@@ -112,6 +113,6 @@
         </div>
     </div>
     
-    <script src="js/app.js"></script>
+    <script src="{{ url_for('static', path='js/main.js') }}"></script>
 </body>
 </html>

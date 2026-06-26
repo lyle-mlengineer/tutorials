@@ -1,3 +1,6 @@
+const API_URL = "http://0.0.0.0:8000/images/label/";
+const API_KEY = "1234";
+
 const imageTagsInput = document.getElementById('imageTagsInput');
 const imageTagsList = document.getElementById('imageTagsList');
 const imageTags = document.querySelectorAll('.image-tag');
@@ -87,3 +90,33 @@ tagsList.addEventListener('click', (e) => {
         e.target.remove();
     }
 })
+
+function submit(){
+  const prompt = document.getElementById('prompt').value;
+  if (prompt === '') {
+    alert('Please enter a valid image description!');
+    return;
+  }
+  const gender = document.getElementById('dropdownGender').value;
+  const imageId = document.querySelector('.image-container__image-result').getAttribute('data-image-id');
+  const rawTags = document.querySelectorAll('.image-tags__tag');
+  let tags = [];
+  rawTags.forEach((rawTag) => {
+    tags.push(rawTag.textContent.trim());
+  })
+  fetch(API_URL + imageId, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-KEY': API_KEY
+    },
+    body: JSON.stringify({description: prompt, gender: gender, tags: tags}),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
