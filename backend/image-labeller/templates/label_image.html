@@ -48,21 +48,6 @@
                     placeholder="Describe your image..."></textarea>
 
                 <div class="image-container__image-tags">
-                    <div class="image-tags__tag" id="tag1">
-                        Bald
-                    </div>
-                    <div class="image-tags__tag" id="tag2">
-                        Beard
-                    </div>
-                    <div class="image-tags__tag" id="tag3">
-                        Mustache
-                    </div>
-                    <div class="image-tags__tag" id="tag4">
-                        Glasses
-                    </div>
-                    <div class="image-tags__tag" id="tag5">
-                        Hat
-                    </div>
                 </div>
 
                 <div class="form-container__dropdown-group">
@@ -98,11 +83,10 @@
                     <div class="custom-input tags">
                         <input type="text" id="imageTagsInput" placeholder="Select or type..." autocomplete="off">
                         <ul id="imageTagsList" class="image-tags hidden">
-                            <li class="image-tag">Chocolate</li>
-                            <li class="image-tag">Vanilla</li>
-                            <li class="image-tag">Strawberry</li>
-                            <li class="image-tag">Mint Chip</li>
-                        </ul>
+                            {% for tag in tags %}
+                            <li class="image-tag">{{ tag }}</li>
+                            {% endfor %}
+                        </ul>   
                     </div>
                 </div>
                 <div class="modal__actions">

@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-from helpers import get_next_image
+from helpers import get_next_image, get_image_tags
 from schemas import ImageLabelRequest, ImageLabelResponse
 
 
@@ -44,7 +44,8 @@ async def label_image(request: Request):
         request=request,
         context={
             "image_id": image_name,
-            "image_src": image_url
+            "image_src": image_url,
+            "tags": await get_image_tags()
         }
     )
 
