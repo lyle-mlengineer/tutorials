@@ -9,8 +9,9 @@ from image_router import router as router_image
 from contextlib import asynccontextmanager
 from helpers import create_all
 from db import get_db
-from helpers import get_image_service
-from services import ImageService
+from helpers import get_image_service, get_tag_service
+from services import ImageService, TagService
+from image_label_router import router as router_image_label
 
 
 
@@ -44,6 +45,7 @@ app.mount(
 templates = Jinja2Templates(directory="templates")
 
 app.include_router(router_image)
+app.include_router(router_image_label)
 
 @app.get("/")
 async def root():
@@ -54,23 +56,19 @@ async def health():
     return {"status": "ok"}
 
 @app.get("/images/label", response_class=HTMLResponse, status_code=status.HTTP_200_OK)
-async def label_image(request: Request, image_service: ImageService = Depends(get_image_service)):
+async def label_image(request: Request, image_service: ImageService = Depends(get_image_service), tag_service: TagService = Depends(get_tag_service)):
     image_id, image_url = await get_next_image(request, image_service)
+    tags = await get_image_tags(tag_service) + ["None"]
+    print(tags)
     return templates.TemplateResponse(
         name="label_image.html", 
         request=request,
         context={
             "image_id": image_id,
             "image_src": image_url,
-            "tags": await get_image_tags()
+            "tags": tags
         }
     )
-
-@app.post("/images/label/{image_id}", response_model=ImageLabelResponse, status_code=status.HTTP_201_CREATED)
-async def label_image(image_id: str, label_request: ImageLabelRequest):
-    print(label_request)
-    print(image_id)
-    return ImageLabelResponse(id=image_id)
 
 
 if __name__ == "__main__":

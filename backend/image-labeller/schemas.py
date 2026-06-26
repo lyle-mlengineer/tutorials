@@ -3,7 +3,7 @@ from __future__ import annotations
 from pydantic import BaseModel
 from typing import Literal
 from datetime import datetime
-from db import Image
+from db import Image, ImageLabel
 
 class ImageRead(BaseModel):
     id: str
@@ -27,3 +27,17 @@ class ImageLabelRequest(BaseModel):
 
 class ImageLabelResponse(BaseModel):
     id: str
+    image_id: str
+    gender: Literal["male", "female"]
+    description: str
+    tags: list[str]
+
+    @classmethod
+    def from_image_label(cls, image_label: ImageLabel) -> ImageLabelResponse:
+        return cls(
+            id=image_label.id, 
+            image_id=image_label.image_id, 
+            gender=image_label.gender, 
+            description=image_label.description, 
+            tags=[tag.tag.name for tag in image_label.image_label_tags]
+        )
