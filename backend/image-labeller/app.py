@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI, Request, status, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -8,6 +8,9 @@ from schemas import ImageLabelRequest, ImageLabelResponse
 from image_router import router as router_image
 from contextlib import asynccontextmanager
 from helpers import create_all
+from db import get_db
+from helpers import get_image_service
+from services import ImageService
 
 
 
@@ -51,13 +54,13 @@ async def health():
     return {"status": "ok"}
 
 @app.get("/images/label", response_class=HTMLResponse, status_code=status.HTTP_200_OK)
-async def label_image(request: Request):
-    image_name, image_url = await get_next_image(request)
+async def label_image(request: Request, image_service: ImageService = Depends(get_image_service)):
+    image_id, image_url = await get_next_image(request, image_service)
     return templates.TemplateResponse(
         name="label_image.html", 
         request=request,
         context={
-            "image_id": image_name,
+            "image_id": image_id,
             "image_src": image_url,
             "tags": await get_image_tags()
         }
@@ -66,6 +69,7 @@ async def label_image(request: Request):
 @app.post("/images/label/{image_id}", response_model=ImageLabelResponse, status_code=status.HTTP_201_CREATED)
 async def label_image(image_id: str, label_request: ImageLabelRequest):
     print(label_request)
+    print(image_id)
     return ImageLabelResponse(id=image_id)
 
 

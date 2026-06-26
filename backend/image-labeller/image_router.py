@@ -5,10 +5,7 @@ from typing import Annotated
 from db import get_db
 from sqlalchemy.orm import Session
 from schemas import NextImageResponse, ImageRead
-
-def get_image_service(db: Annotated[Session, Depends(get_db)]):
-    return ImageService(db)
-
+from helpers import get_image_service
 
 router = APIRouter(
     tags=["Image Operations"],
