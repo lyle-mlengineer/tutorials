@@ -5,9 +5,21 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from helpers import get_next_image, get_image_tags
 from schemas import ImageLabelRequest, ImageLabelResponse
+from image_router import router as router_image
+from contextlib import asynccontextmanager
+from helpers import create_all
 
 
-app: FastAPI = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    create_all()
+    yield
+
+
+app: FastAPI = FastAPI(
+    lifespan=lifespan
+)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -27,6 +39,8 @@ app.mount(
 )
 
 templates = Jinja2Templates(directory="templates")
+
+app.include_router(router_image)
 
 @app.get("/")
 async def root():
