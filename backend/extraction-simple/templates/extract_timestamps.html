@@ -21,7 +21,7 @@
             </div>
 
             <div class="title__action">
-                <button class="create_dataset-button btn" id="createDatasetBtn">
+                <button class="create_dataset-button btn" id="createDatasetBtn" onclick="showDatasetCreationModel()">
                     <box-icon name='plus'></box-icon>
                     <span>Create Dataset</span>
                 </button>
@@ -37,7 +37,10 @@
                     <label for="dataset">Dataset Name:</label>
                     <div class="custom-input">
                         <select class="form-container__dropdown" id="dataset">
-                            <option value="default">Default</option>
+                            <!-- <option value="default">Default</option> -->
+                             {% for dataset in datasets %}
+                            <option value="{{ dataset }}">{{ dataset }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
@@ -107,20 +110,19 @@
                 <div class="form-group">
                     <label for="dataset">Name:</label>
                     <div class="custom-input">
-                        <select class="form-container__dropdown" id="dataset">
-                            <option value="default">Default</option>
-                        </select>
+                        <input type="text" name="name" id="nameInput" placeholder="Enter Dataset name..." autocomplete="off">
+                        <i class='bx bx-lock-alt'></i>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="dataset">Description:</label>
                     <div class="custom-input">
-                        <textarea name="" id="" rows="5" placeholder="Describe your dataset..."></textarea>
+                        <textarea name="" id="descriptionInput" rows="5" placeholder="Describe your dataset..."></textarea>
                     </div>
                 </div>
                 <div class="modal__actions">
-                    <button class="btn" id="confirmBtn">Create</button>
-                    <button class="btn" id="confirmBtn">Cancel</button>
+                    <button class="btn" id="confirmBtn" onclick="createDataset()">Create</button>
+                    <button class="btn" id="confirmBtn" onclick="closeDatasetCreationModel()">Cancel</button>
                 </div>
             </div>
         </div>

@@ -1,10 +1,11 @@
-let API_URL = "http://0.0.0.0:8000/extraction";
+let API_URL = "http://0.0.0.0:8000";
 const API_KEY = "1234";
 
 const typeDropdown = document.querySelector("#typeDropdown");
 const input = document.querySelector("#linkInput");
 const extractionModal = document.querySelector(".extraction-modal");
 const formContainer = document.querySelector(".form-container");
+const datasetCreationModal = document.querySelector(".dataset-creation-modal");
 
 typeDropdown.addEventListener('change', updateLinkText);
 
@@ -93,4 +94,48 @@ function findVideo(){
         .catch((error) => {
             console.error('There was a problem with the fetch operation:', error);
         });
+}
+
+function showDatasetCreationModel(){
+    datasetCreationModal.style.display = 'flex';
+}
+
+function closeDatasetCreationModel(){
+    datasetCreationModal.style.display = 'none';
+}
+
+function createDataset(){
+    const nameInput = document.getElementById('nameInput').value.trim();
+    if(nameInput === ''){
+        alert('Please enter a valid dataset name!');
+        return
+    }
+    const descriptionInput = document.getElementById('descriptionInput').value.trim();
+    console.log('create dataset');
+    console.log(nameInput);
+    console.log(descriptionInput);
+    API_URL += '/dataset';
+    fetch(API_URL, {
+        method: 'POST',
+        headers: {
+            'X-API-KEY': API_KEY,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name: nameInput, description: descriptionInput}),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                console.log('Network response was not ok');
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    closeDatasetCreationModel();
+    window.location.reload();
 }

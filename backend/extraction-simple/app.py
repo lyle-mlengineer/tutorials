@@ -5,10 +5,15 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from contextlib import asynccontextmanager
 from extraction_router import router as router_extraction
+from dataset_router import router as router_dataset
+from utils import create_all
+from services import DatasetService
+from utils import get_dataset_service, get_datasets
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    create_all()
     yield
 
 app: FastAPI = FastAPI(
@@ -33,6 +38,7 @@ app.mount(
 )
 
 app.include_router(router_extraction)
+app.include_router(router_dataset)
 
 templates = Jinja2Templates(directory="templates")
 
@@ -45,8 +51,15 @@ async def health():
     return {"status": "ok"}
 
 @app.get("/timestamps/extract", response_class=HTMLResponse, status_code=status.HTTP_200_OK)
-async def extract_timestamps(request: Request):
+async def extract_timestamps(
+    request: Request,
+    dataset_service: DatasetService = Depends(get_dataset_service)
+    ):
+    datasets = await get_datasets(dataset_service)
     return templates.TemplateResponse(
         name="extract_timestamps.html", 
-        request=request
+        request=request,
+        context={
+            "datasets": datasets
+        }
     )

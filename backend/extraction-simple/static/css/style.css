@@ -224,6 +224,15 @@ body {
     display: none;
 }
 
+.dataset-creation-modal .modal__body{
+    /* border: solid; */
+    display: grid;
+}
+
+.dataset-creation-modal .modal__actions{
+    justify-content: center;
+}
+
 @media screen and (max-width: 320px){
     .title__text{
         font-size: 24px;
