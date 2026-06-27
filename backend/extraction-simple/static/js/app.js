@@ -6,6 +6,7 @@ const input = document.querySelector("#linkInput");
 const extractionModal = document.querySelector(".extraction-modal");
 const formContainer = document.querySelector(".form-container");
 const datasetCreationModal = document.querySelector(".dataset-creation-modal");
+const imageResult = document.querySelector(".image-container__image-result-image");
 
 typeDropdown.addEventListener('change', updateLinkText);
 
@@ -57,7 +58,7 @@ function findVideo(){
     let body;
     
     if(type === 'video'){
-        API_URL += '/video';
+        API_URL += '/extraction/find-video';
         body = JSON.stringify({url: linkInput});
         console.log(linkInput);
         console.log(API_URL);
@@ -90,6 +91,7 @@ function findVideo(){
         })
         .then((data) => {
             console.log(data);
+            imageResult.src = data.thumbnail_url;
         })
         .catch((error) => {
             console.error('There was a problem with the fetch operation:', error);

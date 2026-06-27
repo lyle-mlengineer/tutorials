@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Depends
 from schemas import VideoExtractionRequest, PlaylistExtractionRequest, ChannelExtractionRequest
+from utils import get_timestamps_extraction_service
+from services import TimestampsExtractionService
 
 
 router = APIRouter(
@@ -17,3 +19,10 @@ async def extract_playlist_timestamps(extraction_request: PlaylistExtractionRequ
 @router.post("/extraction/channel")
 async def extract_channel_timestamps(extraction_request: ChannelExtractionRequest):
     return extraction_request
+
+@router.post("/extraction/find-video")
+async def find_video(
+    extraction_request: VideoExtractionRequest,
+    timestamps_extraction_service: TimestampsExtractionService = Depends(get_timestamps_extraction_service)
+    ):
+    return await timestamps_extraction_service.find_video(extraction_request.url)

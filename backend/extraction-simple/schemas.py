@@ -9,3 +9,6 @@ class PlaylistExtractionRequest(BaseModel):
 
 class ChannelExtractionRequest(BaseModel):
     id: str
+
+class FindVideoResponse(BaseModel):
+    thumbnail_url: str
