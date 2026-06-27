@@ -7,7 +7,7 @@
     <!--=============== REMIXICONS ===============-->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
       <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{  url_for('static', path='css/style.css') }}">
 </head>
 <body>
 
@@ -45,7 +45,7 @@
                 <div class="form-group">
                     <label for="type">Type:</label>
                     <div class="custom-input">
-                        <select class="form-container__dropdown" id="type">
+                        <select class="form-container__dropdown" id="typeDropdown" name="type">
                             <option value="video">YouTube Video</option>
                             <option value="playlist">YouTube Playlist</option>
                             <option value="channel">YouTube Channel</option>
@@ -56,13 +56,13 @@
                 <div class="form-group"> 
                     <label for="url">Link:</label>
                     <div class="custom-input">
-                        <input type="url" name="url" placeholder="Enter video URL here..." autocomplete="off">
+                        <input type="url" name="url" id="linkInput" placeholder="Enter YouTube video URL..." autocomplete="off">
                         <i class='bx bx-lock-alt'></i>
                     </div>
                 </div>
                 
                 <div class="form-container__button" id="extractBtn">
-                    <button class="extract-button btn">
+                    <button class="extract-button btn" onclick="findResource()">
                         <box-icon type='solid' name='magic-wand'></box-icon>
                         Extract
                     </button>
@@ -89,10 +89,10 @@
                     <span>"Video Title"</span> scheduled for extraction!
                 </p>
                 <div class="image-container" id="imageResultContainer">
-                    <img class="image-container__image-result-image show" id="imageResult" src="img/example.jpeg">
+                    <img class="image-container__image-result-image show" id="imageResult" src="{{  url_for('static', path='img/example.jpeg') }}">
                 </div>
                 <div class="modal__actions">
-                    <button class="btn" id="confirmBtn">Ok</button>
+                    <button class="btn" id="confirmBtn" onclick="closeExtractionModal()">Ok</button>
                 </div>
             </div>
         </div>
@@ -126,6 +126,6 @@
         </div>
     </div>
     
-    <script src="js/main.js"></script>
+    <script src="{{  url_for('static', path='js/app.js') }}"></script>
 </body>
 </html>
