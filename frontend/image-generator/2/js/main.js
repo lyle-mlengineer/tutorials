@@ -1,4 +1,4 @@
-const API_KEY = '1234'; // Paste your API Key
+const API_KEY = '12345'; // Paste your API Key
 const API_URL = 'http://0.0.0.0:8000/generate-image';
 
 const imageContainer = document.getElementById('imageContainer');
@@ -8,6 +8,7 @@ const imageResultElement = document.getElementById('imageResult');
 function generateImage() {
 
     setLoadingState(true)
+    setErrorState(false)
 
     fetch(API_URL, {
         method: 'GET',
@@ -17,6 +18,9 @@ function generateImage() {
     })
         .then((response) => {
             if (!response.ok) {
+                console.log('Network response was not ok');
+                setLoadingState(false);
+                setErrorState(true)
                 throw new Error('Network response was not ok');
             }
             return response.blob();
@@ -28,7 +32,8 @@ function generateImage() {
         })
         .catch((error) => {
             console.error(error);
-            setLoadingState(false);
+            // setLoadingState(false);
+            // setErrorState(true);
         });
 }
 
@@ -39,6 +44,17 @@ function setLoadingState(isLoading) {
     }else{
         imageResultElement.style.display = 'block';
         imageContainer.classList.remove('loading');
+    }
+}
+
+function setErrorState(isError) {
+    if(isError){
+        imageResultElement.style.display = 'none';
+        console.log('error');
+        imageContainer.classList.add('error');
+    }else{
+        imageResultElement.style.display = 'block';
+        imageContainer.classList.remove('error');
     }
 }
 

@@ -88,8 +88,8 @@ h2{
 
 .home-container__text{
     margin-top: 16px;
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 400;
     text-align: center;
 }
 
@@ -206,8 +206,43 @@ h2{
 }
 
 .image-container.loading .image-container__layer,
-.image-container.loading .image-container__download-button{
+.image-container.loading .image-container__download-button,
+.image-container.loading .image-container__image-result,
+.image-container.loading .image-container__error-container{
     display: none;
+}
+
+.image-container__error-container{
+    border: 1px solid red;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+    padding: 8px;
+}
+
+.image-container__error-text{
+    color: red;
+    text-align: center;
+}
+
+/* On error */
+.image-container.error {
+    box-shadow: none;
+    background: var(--gray-bg-color);
+}
+
+.image-container.error .image-container__layer,
+.image-container.error .image-container__download-button,
+.image-container.error .image-container__image-result,
+.image-container.error .image-container__loading-container{
+    display: none;
+}
+
+.image-container.error .image-container__loading-container{
+    background: white;
 }
 
 @media screen and (max-width: 568px){
