@@ -33,3 +33,4 @@ async def save_image_bytes(image_bytes: bytes, image_id: str, format: str = "JPE
     async with aiofiles.open(filename, "wb") as f:
         await f.write(image_bytes)
     return filename
+

@@ -5,10 +5,12 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from contextlib import asynccontextmanager
 from generation_router import router as router_generation
+from utils import create_all
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    create_all()
     yield
 
 
