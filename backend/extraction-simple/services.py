@@ -1,8 +1,11 @@
 from sqlalchemy.orm import Session
-from models import DatasetCreate, DatasetRead, ExtractionResponse, VideoRead, VideoCreate
+from models import DatasetCreate, DatasetRead, ExtractionResponse, VideoRead, VideoCreate, PlaylistCreate
 from db import Dataset
 import uuid
-from extraction_utils import extract_video_timestamps, find_video_parse_video, parse_video_id, preprocess_video
+from extraction_utils import (
+    extract_video_timestamps, find_video_parse_video, parse_video_id, preprocess_video, parse_playlist_id, 
+    preprocess_playlist
+)
 from schemas import FindVideoResponse
 from tubectrl import YouTube
 from db import VideoExtraction, Video as VideoInDb
@@ -109,6 +112,17 @@ class TimestampsExtractionService:
         self.db.add(video_extraction)
         self.db.commit()
         return video_extraction
+    
+    async def extract_playlist_timestamps(self, playlist_url: str, dataset_id: str):
+        playlist_id: str = parse_playlist_id(playlist_url)
+        videos_create: list[VideoCreate] = preprocess_playlist(playlist_url, self.youtube)
+        results: list[VideoExtraction] = []
+        for video_create in videos_create:
+            r = await self.extract_video_timestamps(video_create.id, dataset_id)
+            r = await find_video_parse_video(video_create.id, self.youtube)
+            results.append(r)
+        # print(results)
+        return results[0]
 
     async def get_timestamps(self, dataset_id: str):
         pass

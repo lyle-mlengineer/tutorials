@@ -1,0 +1,75 @@
+{
+    "video_id": "H45lF4sUgiE",
+    "title": "Diffusion Models | DDPM Explained",
+    "timestamps": [
+        {
+            "timestamp": "00:00",
+            "title": "Introduction"
+        },
+        {
+            "timestamp": "00:25",
+            "title": "Basic Idea of Diffusion Models"
+        },
+        {
+            "timestamp": "02:23",
+            "title": "Why call this Diffusion Models"
+        },
+        {
+            "timestamp": "05:24",
+            "title": "Transition function in Denoising Diffusion Probabilistic Models  DDPM"
+        },
+        {
+            "timestamp": "07:28",
+            "title": "Distribution at end of forward Diffusion Process"
+        },
+        {
+            "timestamp": "10:17",
+            "title": "Noise Schedule in Diffusion Models"
+        },
+        {
+            "timestamp": "11:36",
+            "title": "Recursion to get from original image to noisy image"
+        },
+        {
+            "timestamp": "13:40",
+            "title": "Reverse Process in Diffusion Models"
+        },
+        {
+            "timestamp": "14:40",
+            "title": "Variational Lower Bound in Denoising Diffusion Probabilistic Models  DDPM"
+        },
+        {
+            "timestamp": "17:02",
+            "title": "Simplifying the Likelihood for Diffusion Models"
+        },
+        {
+            "timestamp": "19:08",
+            "title": "Ground Truth Denoising Distribution"
+        },
+        {
+            "timestamp": "22:31",
+            "title": "Loss as Original Image Prediction"
+        },
+        {
+            "timestamp": "24:10",
+            "title": "Loss as Noise Prediction"
+        },
+        {
+            "timestamp": "26:26",
+            "title": "Training of DDPM  Denoising Diffusion Probabilistic Models"
+        },
+        {
+            "timestamp": "27:17",
+            "title": "Sampling in DDPM  Denoising Diffusion Probabilistic Models"
+        },
+        {
+            "timestamp": "28:30",
+            "title": "Why create this video on Diffusion Models"
+        },
+        {
+            "timestamp": "29:10",
+            "title": "Thank You"
+        }
+    ],
+    "thumbnail_url": "https://i.ytimg.com/vi/H45lF4sUgiE/sddefault.jpg"
+}

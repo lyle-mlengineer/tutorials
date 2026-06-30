@@ -1,0 +1,31 @@
+{
+    "video_id": "aSLDXdc2hkk",
+    "title": "Scalable Diffusion Models with Transformers | DiT Explanation and Implementation",
+    "timestamps": [
+        {
+            "timestamp": "00:00",
+            "title": "Intro"
+        },
+        {
+            "timestamp": "01:10",
+            "title": "Vision Transformer Review"
+        },
+        {
+            "timestamp": "04:08",
+            "title": "From VIT to Diffusion Transformer"
+        },
+        {
+            "timestamp": "09:10",
+            "title": "DiT Block Design"
+        },
+        {
+            "timestamp": "14:01",
+            "title": "Experiments on DiT block and scale of Diffusion Transformer"
+        },
+        {
+            "timestamp": "21:50",
+            "title": "Diffusion Transformer (DiT) implementation in PyTorch"
+        }
+    ],
+    "thumbnail_url": "https://i.ytimg.com/vi/aSLDXdc2hkk/sddefault.jpg"
+}

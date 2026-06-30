@@ -66,12 +66,12 @@ function findVideo(){
         console.log(dataset);
         console.log(API_URL);
     }else if(type === 'playlist'){
-        API_URL += '/playlist';
+        API_URL += '/extraction/playlist';
         body = JSON.stringify({url: linkInput, dataset: dataset});
         console.log(linkInput);
         console.log(API_URL);
     }else{
-        API_URL += '/channel';
+        API_URL += '/extraction/channel';
         body = JSON.stringify({id: linkInput, dataset: dataset});
         console.log(linkInput);
         console.log(API_URL);
@@ -93,6 +93,7 @@ function findVideo(){
             return response.json();
         })
         .then((data) => {
+            console.log('Success:', data);
             console.log(data);
             imageResult.src = data.thumbnail_url;
         })

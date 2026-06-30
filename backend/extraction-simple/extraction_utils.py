@@ -1,8 +1,9 @@
 from tubectrl import YouTube
-from tubectrl.models import Video
+from tubectrl.models import Video, PlaylistItem
+from tubectrl.models.playlist import Playlist
 from schemas import FindVideoResponse
 from db import Video as VideoInDb
-from models import ExtractionResponse, Timestamp, Timestamps, VideoCreate
+from models import ExtractionResponse, Timestamp, Timestamps, VideoCreate, PlaylistCreate
 import re
 import os
 import json
@@ -16,6 +17,14 @@ def parse_video_id(url: str) -> str:
         video_id = url
     return video_id
 
+def parse_playlist_id(url: str) -> str:
+    playlist_id: str
+    try:
+        playlist_id: str = url.split("list=")[1].split("&")[0]
+    except IndexError:
+        playlist_id = url
+    return playlist_id
+
 def preprocess_video(video_url: str, youtube: YouTube) -> VideoCreate:
     video_id: str = parse_video_id(video_url)
     video: Video = find_video(video_id, youtube)
@@ -23,16 +32,34 @@ def preprocess_video(video_url: str, youtube: YouTube) -> VideoCreate:
     description: str = get_video_description(video=video)
     return VideoCreate(id=video_id, title=title, description=description)
 
+def preprocess_playlist(playlist_url: str, youtube: YouTube) -> list[VideoCreate]:
+    playlist_id: str = parse_playlist_id(playlist_url)
+    playlist_items: list[PlaylistItem] = find_playlist_items(playlist_id, youtube)
+    items: list[VideoCreate] = []
+    for l in playlist_items:
+        for item in l:
+            items.append(VideoCreate(
+            id=item.snippet.resourceId.videoId,
+            title=item.snippet.title,
+            description=item.snippet.description
+        ))
+    return items
+
+
 def find_video(video_id: str, youtube: YouTube) -> Video:
     video: Video = youtube.find_video_by_id(video_id=video_id)
     return video
+
+def find_playlist_items(playlist_id: str, youtube: YouTube) -> Playlist:
+    playlist_items: list[PlaylistItem] = youtube.get_playlist_items_iterator(playlist_id=playlist_id)
+    return list(playlist_items)
 
 def parse_video_thumbnails(video: Video) -> str:
     for resolution in ["default", "high", "medium", "standard"]:
         for thumbnail in video.snippet.thumbnails:
             if thumbnail.resolution == resolution:
                 thumbnail_url: str = thumbnail.url
-                print(f"Thumbnail URL for resolution {resolution}: {thumbnail_url}")
+                # print(f"Thumbnail URL for resolution {resolution}: {thumbnail_url}")
                 return thumbnail_url
 
 def get_video_description(video: Video) -> str:
@@ -99,7 +126,7 @@ async def extract_video_timestamps(video_url: str, youtube: YouTube):
         for thumbnail in video.snippet.thumbnails:
             if thumbnail.resolution == resolution:
                 thumbnail_url: str = thumbnail.url
-                print(f"Thumbnail URL for resolution {resolution}: {thumbnail_url}")
+                # print(f"Thumbnail URL for resolution {resolution}: {thumbnail_url}")
                 break
     extraction_response = ExtractionResponse(
         video_id=video_id,

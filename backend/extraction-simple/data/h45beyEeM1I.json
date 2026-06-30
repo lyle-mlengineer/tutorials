@@ -1,0 +1,39 @@
+{
+    "video_id": "h45beyEeM1I",
+    "title": "Generative Adversarial Networks | Tutorial with Math Explanation and PyTorch Implementation",
+    "timestamps": [
+        {
+            "timestamp": "00:00",
+            "title": "Intro"
+        },
+        {
+            "timestamp": "00:36",
+            "title": "Objective of using Generative Adversarial Networks"
+        },
+        {
+            "timestamp": "01:50",
+            "title": "Components of GAN: Generator and Discriminator"
+        },
+        {
+            "timestamp": "04:53",
+            "title": "Optimizing a Generative Adversarial Networks"
+        },
+        {
+            "timestamp": "12:22",
+            "title": "Optimal Discriminator and Generator of GAN"
+        },
+        {
+            "timestamp": "18:57",
+            "title": "PyTorch Implementation of Generative Adversarial Networks"
+        },
+        {
+            "timestamp": "25:33",
+            "title": "Results of training GAN on MNIST"
+        },
+        {
+            "timestamp": "26:02",
+            "title": "Outro"
+        }
+    ],
+    "thumbnail_url": "https://i.ytimg.com/vi/h45beyEeM1I/sddefault.jpg"
+}

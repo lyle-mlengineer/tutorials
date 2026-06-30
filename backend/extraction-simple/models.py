@@ -1,6 +1,6 @@
 from __future__ import annotations
 from pydantic import BaseModel
-from db import Video, Dataset, VideoExtraction
+from db import Video, Dataset, VideoExtraction, Playlist
 from datetime import datetime
 
 
@@ -81,6 +81,32 @@ class VideoRead(BaseModel):
             id=video.id,
             title=video.title,
             description=video.description
+        )
+    
+class PlaylistCreate(BaseModel):
+    id: str
+    title: str
+    description: str
+
+    @classmethod
+    def from_playlist(cls, playlist: Playlist) -> PlaylistCreate:
+        return PlaylistCreate(
+            id=playlist.id,
+            title=playlist.title,
+            description=playlist.description
+        )
+    
+class PlaylistRead(BaseModel):
+    id: str
+    title: str
+    description: str
+
+    @classmethod
+    def from_playlist(cls, playlist: Playlist) -> PlaylistRead:
+        return PlaylistRead(
+            id=playlist.id,
+            title=playlist.title,
+            description=playlist.description
         )
     
 class Timestamp(BaseModel):

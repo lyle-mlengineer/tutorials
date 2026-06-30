@@ -1,0 +1,71 @@
+{
+    "video_id": "n6CwImm_WDI",
+    "title": "ControlNet with Diffusion Models | Explanation and PyTorch Implementation",
+    "timestamps": [
+        {
+            "timestamp": "00:00",
+            "title": "Intro"
+        },
+        {
+            "timestamp": "00:36",
+            "title": "Objective of Controlnet"
+        },
+        {
+            "timestamp": "04:15",
+            "title": "Controlnet Model Architecture Explained"
+        },
+        {
+            "timestamp": "07:12",
+            "title": "Controlnet in Stable Diffusion"
+        },
+        {
+            "timestamp": "10:41",
+            "title": "Diffusion Model Implementation Review"
+        },
+        {
+            "timestamp": "13:10",
+            "title": "ControlNet with Canny Edges MNIST for Diffusion Models"
+        },
+        {
+            "timestamp": "14:00",
+            "title": "Diffusion Model UNet Recap"
+        },
+        {
+            "timestamp": "16:50",
+            "title": "Architecture for Canny Edges ControlNet for Diffusion Models"
+        },
+        {
+            "timestamp": "17:45",
+            "title": "ControlNet PyTorch Implementation for Diffusion Models"
+        },
+        {
+            "timestamp": "26:59",
+            "title": "ControlNet Canny Edge Results for MNIST"
+        },
+        {
+            "timestamp": "27:53",
+            "title": "Control net for Unconditional Latent Diffusion Models"
+        },
+        {
+            "timestamp": "29:16",
+            "title": "Unconditional Latent Diffusion Model Result on CelebHQ"
+        },
+        {
+            "timestamp": "29:36",
+            "title": "ControlNet for Canny Edge Results on CelebHQ"
+        },
+        {
+            "timestamp": "30:05",
+            "title": "ControlNet Implementation Settings"
+        },
+        {
+            "timestamp": "31:25",
+            "title": "ControlNet Architecture Variations and Results"
+        },
+        {
+            "timestamp": "32:20",
+            "title": "Thank You"
+        }
+    ],
+    "thumbnail_url": "https://i.ytimg.com/vi/n6CwImm_WDI/sddefault.jpg"
+}

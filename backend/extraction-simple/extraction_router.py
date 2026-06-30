@@ -13,8 +13,12 @@ async def extract_video_timestamps(extraction_request: VideoExtractionRequest):
     return extraction_request
 
 @router.post("/extraction/playlist")
-async def extract_playlist_timestamps(extraction_request: PlaylistExtractionRequest):
-    return extraction_request
+async def extract_playlist_timestamps(
+    extraction_request: PlaylistExtractionRequest,
+    timestamps_extraction_service: TimestampsExtractionService = Depends(get_timestamps_extraction_service)
+    ):
+    r = await timestamps_extraction_service.extract_playlist_timestamps(extraction_request.url, extraction_request.dataset)
+    return r
 
 @router.post("/extraction/channel")
 async def extract_channel_timestamps(extraction_request: ChannelExtractionRequest):

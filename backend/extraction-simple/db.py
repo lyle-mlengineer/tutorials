@@ -43,6 +43,22 @@ class Video(Base):
     description: Mapped[str] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.now(timezone.utc))
 
+class Playlist(Base):
+    __tablename__ = "playlists"
+    id: Mapped[str] = mapped_column(String(255), primary_key=True)
+    # dataset_id: Mapped[str] = mapped_column(String(255), ForeignKey("dataset.id"))
+    title: Mapped[str] = mapped_column(String(100))
+    description: Mapped[str] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.now(timezone.utc))
+
+class Channel(Base):
+    __tablename__ = "channels"
+    id: Mapped[str] = mapped_column(String(255), primary_key=True)
+    # dataset_id: Mapped[str] = mapped_column(String(255), ForeignKey("dataset.id"))
+    title: Mapped[str] = mapped_column(String(100))
+    description: Mapped[str] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.now(timezone.utc))
+
 class VideoExtraction(Base):
     __tablename__ = "video_extractions"
     id: Mapped[str] = mapped_column(String(255), primary_key=True)

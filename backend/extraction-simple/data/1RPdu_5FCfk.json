@@ -1,0 +1,39 @@
+{
+    "video_id": "1RPdu_5FCfk",
+    "title": "Understanding Variational Autoencoder | VAE Explained",
+    "timestamps": [
+        {
+            "timestamp": "00:15",
+            "title": "Video Highlights"
+        },
+        {
+            "timestamp": "00:32",
+            "title": "Autoencoders"
+        },
+        {
+            "timestamp": "01:49",
+            "title": "Need for Variational Auto Encoder"
+        },
+        {
+            "timestamp": "02:49",
+            "title": "Transitioning to VAE from AutoEncoder"
+        },
+        {
+            "timestamp": "05:21",
+            "title": "Modelling Data Generation in Variational AutoEncoder"
+        },
+        {
+            "timestamp": "06:18",
+            "title": "Deriving Objective and Loss of VAE"
+        },
+        {
+            "timestamp": "08:24",
+            "title": "Summary of Variational AutoEncoder Architecture"
+        },
+        {
+            "timestamp": "08:58",
+            "title": "Conditional VAE"
+        }
+    ],
+    "thumbnail_url": "https://i.ytimg.com/vi/1RPdu_5FCfk/sddefault.jpg"
+}
