@@ -7,6 +7,7 @@ const extractionModal = document.querySelector(".extraction-modal");
 const formContainer = document.querySelector(".form-container");
 const datasetCreationModal = document.querySelector(".dataset-creation-modal");
 const imageResult = document.querySelector(".image-container__image-result-image");
+const datasetDropdown = document.querySelector("#datasetDropdown");
 
 typeDropdown.addEventListener('change', updateLinkText);
 
@@ -55,21 +56,23 @@ function findResource(){
 function findVideo(){
     const linkInput = document.getElementById('linkInput').value.trim();
     const type = document.getElementById('typeDropdown').value;
+    const dataset = document.getElementById('dataset').value;
     let body;
     
     if(type === 'video'){
         API_URL += '/extraction/find-video';
-        body = JSON.stringify({url: linkInput});
+        body = JSON.stringify({url: linkInput, dataset: dataset});
         console.log(linkInput);
+        console.log(dataset);
         console.log(API_URL);
     }else if(type === 'playlist'){
         API_URL += '/playlist';
-        body = JSON.stringify({url: linkInput});
+        body = JSON.stringify({url: linkInput, dataset: dataset});
         console.log(linkInput);
         console.log(API_URL);
     }else{
         API_URL += '/channel';
-        body = JSON.stringify({id: linkInput});
+        body = JSON.stringify({id: linkInput, dataset: dataset});
         console.log(linkInput);
         console.log(API_URL);
     }

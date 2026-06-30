@@ -1,0 +1,43 @@
+{
+    "video_id": "mABpAI-pCw0",
+    "title": "Command Line Basics for Beginners - Full Course",
+    "timestamps": [
+        {
+            "timestamp": "00:00",
+            "title": "Intro"
+        },
+        {
+            "timestamp": "02:56",
+            "title": "Demystifying the command line"
+        },
+        {
+            "timestamp": "08:42",
+            "title": "Inspect the file tree with ls"
+        },
+        {
+            "timestamp": "14:17",
+            "title": "Rules of navigation"
+        },
+        {
+            "timestamp": "20:36",
+            "title": "Create & delete files with touch and rm"
+        },
+        {
+            "timestamp": "25:21",
+            "title": "Create & delete directories with mkdir, rmdir, and r"
+        },
+        {
+            "timestamp": "30:18",
+            "title": "Write to files with echo"
+        },
+        {
+            "timestamp": "37:24",
+            "title": "Read from files with cat"
+        },
+        {
+            "timestamp": "43:32",
+            "title": "Section 1 outro"
+        }
+    ],
+    "thumbnail_url": "https://i.ytimg.com/vi/mABpAI-pCw0/sddefault.jpg"
+}

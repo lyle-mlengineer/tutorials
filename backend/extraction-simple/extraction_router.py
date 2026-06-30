@@ -25,4 +25,4 @@ async def find_video(
     extraction_request: VideoExtractionRequest,
     timestamps_extraction_service: TimestampsExtractionService = Depends(get_timestamps_extraction_service)
     ):
-    return await timestamps_extraction_service.find_video(extraction_request.url)
+    return await timestamps_extraction_service.find_video(extraction_request.url, extraction_request.dataset)

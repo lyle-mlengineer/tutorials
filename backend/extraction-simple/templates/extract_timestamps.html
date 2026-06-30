@@ -39,7 +39,7 @@
                         <select class="form-container__dropdown" id="dataset">
                             <!-- <option value="default">Default</option> -->
                              {% for dataset in datasets %}
-                            <option value="{{ dataset }}">{{ dataset }}</option>
+                            <option value="{{ dataset.id }}">{{ dataset.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
