@@ -60,7 +60,7 @@ function findVideo(){
     let body;
     
     if(type === 'video'){
-        API_URL += '/extraction/find-video';
+        API_URL += '/extraction/video';
         body = JSON.stringify({url: linkInput, dataset: dataset});
         console.log(linkInput);
         console.log(dataset);

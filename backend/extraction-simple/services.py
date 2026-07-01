@@ -4,7 +4,7 @@ from db import Dataset
 import uuid
 from extraction_utils import (
     extract_video_timestamps, find_video_parse_video, parse_video_id, preprocess_video, parse_playlist_id, 
-    preprocess_playlist
+    preprocess_playlist, find_channel_playlists
 )
 from schemas import FindVideoResponse
 from tubectrl import YouTube
@@ -133,4 +133,12 @@ class TimestampsExtractionService:
 
     async def find_video(self, video_url: str, dataset_id: str) -> FindVideoResponse:
         await self.extract_video_timestamps(video_url, dataset_id)
-        return await find_video_parse_video(video_url, self.youtube)
+        return await find_video_parse_video(video_url, self.youtube) 
+    
+    async def extract_channel_timestamps(self, channel_id: str, dataset_id: str):
+        playlists: list[PlaylistCreate] = await find_channel_playlists(channel_id, self.youtube)
+        results: list[VideoExtraction] = []
+        for playlist in playlists:
+            r = await self.extract_playlist_timestamps(playlist.id, dataset_id)
+            results.append(r)
+        return results[0]

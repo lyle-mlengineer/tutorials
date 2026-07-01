@@ -1,3 +1,5 @@
+from typing import Iterator
+
 from tubectrl import YouTube
 from tubectrl.models import Video, PlaylistItem
 from tubectrl.models.playlist import Playlist
@@ -28,8 +30,8 @@ def parse_playlist_id(url: str) -> str:
 def preprocess_video(video_url: str, youtube: YouTube) -> VideoCreate:
     video_id: str = parse_video_id(video_url)
     video: Video = find_video(video_id, youtube)
-    title: str = video.snippet.title
-    description: str = get_video_description(video=video)
+    title: str = video.snippet.title or ''
+    description: str = get_video_description(video=video) or ''
     return VideoCreate(id=video_id, title=title, description=description)
 
 def preprocess_playlist(playlist_url: str, youtube: YouTube) -> list[VideoCreate]:
@@ -40,8 +42,8 @@ def preprocess_playlist(playlist_url: str, youtube: YouTube) -> list[VideoCreate
         for item in l:
             items.append(VideoCreate(
             id=item.snippet.resourceId.videoId,
-            title=item.snippet.title,
-            description=item.snippet.description
+            title=item.snippet.title or '',
+            description=item.snippet.description or ''
         ))
     return items
 
@@ -53,6 +55,19 @@ def find_video(video_id: str, youtube: YouTube) -> Video:
 def find_playlist_items(playlist_id: str, youtube: YouTube) -> Playlist:
     playlist_items: list[PlaylistItem] = youtube.get_playlist_items_iterator(playlist_id=playlist_id)
     return list(playlist_items)
+
+async def find_channel_playlists(channel_id: str, youtube: YouTube) -> list[PlaylistCreate]:
+    playlists_lists: Iterator[Playlist] = youtube.get_channel_playlists_iterator(channel_id=channel_id)
+    playlist_creates: list[PlaylistCreate] = []
+    for playlist_list in list(playlists_lists)[:1]:
+        # print(playlist_list)
+        for playlist in playlist_list:
+            playlist_creates.append(PlaylistCreate(
+                id=playlist.id,
+                title=playlist.snippet.title or '',
+                description=playlist.snippet.description or ''
+            ))
+    return playlist_creates
 
 def parse_video_thumbnails(video: Video) -> str:
     for resolution in ["default", "high", "medium", "standard"]:
@@ -121,7 +136,11 @@ async def extract_video_timestamps(video_url: str, youtube: YouTube):
     video: Video = find_video(video_id=video_id, youtube=youtube)
     # print(video)
     description: str = get_video_description(video=video)
-    timestamps: list[Timestamps] = extract_timestamps(description=description)
+    try:
+        timestamps: list[Timestamps] = extract_timestamps(description=description)
+    except Exception as e:
+        print(f"Error occurred while extracting timestamps: {e}")
+        timestamps = []
     for resolution in ["default", "high", "medium", "standard"]:
         for thumbnail in video.snippet.thumbnails:
             if thumbnail.resolution == resolution:
