@@ -48,11 +48,11 @@ imageTagsInput.addEventListener('input', (e) => {
   });
 
   // Hide the list container completely if no items match
-  if (hasVisibleOptions) {
-    imageTagsInput.classList.remove('hidden');
-  } else {
-    imageTagsInput.classList.add('hidden');
-  }
+  // if (hasVisibleOptions) {
+  //   imageTagsInput.classList.remove('hidden');
+  // } else {
+  //   imageTagsInput.classList.add('hidden');
+  // }
 });
 
 // Close dropdown if user clicks completely outside of the element

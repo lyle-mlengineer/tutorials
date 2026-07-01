@@ -519,13 +519,13 @@ body {
     display: flex;
 }
 
-/* .upload-modal{
+.upload-modal{
     display: none;
 }
 
 .upload-modal.show{
     display: flex;
-} */
+}
 
 @media screen and (max-width: 320px) {
     .title__text{
