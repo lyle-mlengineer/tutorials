@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Transcriber</title>
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Link to Box Icons -->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <!-- Linking Box Icon for Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+</head>
+<body>
+
+    <!-- CONTAINER -->
+    <main class="container">
+
+        <!-- TITLE -->
+        <div class="title">
+            <div class="title__logo">
+                <box-icon class="title__icon" type='solid' name='magic-wand'></box-icon>
+                <span class="title__text">Speech Transcriber</span>
+            </div>
+
+            <div class="title__action">
+                <button class="settings-button btn" id="settingsBtn " onclick="openSettingsModal()">
+                    <box-icon name='cog'></box-icon>
+                    <span>Settings</span>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="audio__input">
+            <div class="audio">
+                <audio src="" class="audio-player" id="audioPlayer" controls></audio>
+            </div>
+
+            <div class="audio-edit__action">
+                <button class="edit-audio-button btn" id="editAudioBtn " onclick="openAudioEditModal()">
+                    <box-icon name='edit'></box-icon>
+                    <span>Edit Audio</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-input">
+            <div class="transcription-input">
+                <textarea class="form-container__transcription-input" id="transcription" rows="12"
+                    placeholder="Transcription will appear here..."></textarea>
+            </div>
+            <div class="form-controls">
+
+                <div class="form-container__audio-tags">
+                    <div class="audio-tags__tag" id="tag1">
+                        Happy
+                    </div>
+                    <div class="audio-tags__tag" id="tag2">
+                        Sad
+                    </div>
+                    <div class="audio-tags__tag" id="tag3">
+                        Cheerful
+                    </div>
+                    <div class="audio-tags__tag" id="tag4">
+                        Shaky voice
+                    </div>
+                    <div class="audio-tags__tag" id="tag5">
+                        Feminine
+                    </div>
+                </div>
+
+                <div class="form-container__dropdown-group">
+                    <!-- DROPDOWN GENDER -->
+                    <select class="form-container__dropdown form-input" id="dropdownGender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+
+                    <!-- DROPDOWN ACCENT -->
+                    <select class="form-container__dropdown form-input" id="dropdownAccent">
+                        <option value="american">Luo</option>
+                        <option value="british">Kikuyu</option>
+                        <option value="british">Swahili</option>
+                    </select>
+
+                    <!-- DROPDOWN SPEAKER -->
+                    <select class="form-container__dropdown form-input" id="dropdownSpeaker">
+                        <option value="male">Abel</option>
+                        <option value="female">Nusra</option>
+                    </select>
+
+                    <button class="tag-button btn form-input" id="createtagBtn" onclick="openTagModal()">
+                        <!--TAG BUTTON-->
+                        <box-icon name='plus'></box-icon>
+                        <span>Tag</span>
+                    </button>
+                </div>
+
+                <!-- SUBMIT TRANSCRIPT BUTTON -->
+                <button class="form-container__button btn" onclick="submitTranscript()">
+                    <box-icon type='solid' name='magic-wand'></box-icon>
+                    Submit Transcript
+                </button>
+
+            </div>
+        </div>
+
+    </main>
+    
+</body>
+</html>
