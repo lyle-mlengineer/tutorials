@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- Link to Box Icons -->
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <!-- Linking Box Icon for Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
 </head>
 <body>
 
@@ -21,7 +23,7 @@
             </div>
 
             <div class="title__action">
-                <button class="create_dataset-button btn" id="createDatasetBtn">
+                <button class="create_dataset-button btn" id="createDatasetBtn " onclick="openFileUploadModal()">
                     <box-icon name='plus'></box-icon>
                     <span>Upload</span>
                 </button>
@@ -111,6 +113,34 @@
                 <div class="modal__actions">
                     <button class="btn" id="confirmBtn" onclick="addTag()">Create</button>
                     <button class="btn" id="confirmBtn" onclick="closeTagModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="upload-modal modal">
+        <div class="upload-modal__content">
+            <div class="upload-modal__header">
+                <h3>Upload Image</h3>
+            </div>
+            <div class="upload-modal__body">
+                <div class="file-uploader">
+                    <div class="uploader-header">
+                        <h2 class="uploader-title">File Uploader</h2>
+                        <h4 class="file-completed-status"></h4>
+                    </div>
+                    <ul class="file-list"></ul>
+                    <div class="file-upload-box">
+                        <h2 class="box-title">
+                        <span class="file-instruction">Drag files here or</span>
+                        <span class="file-browse-button">browse</span>
+                        </h2>
+                        <input class="file-browse-input" type="file" multiple hidden>
+                    </div>
+                </div>
+                <div class="modal__actions">
+                    <button class="btn" id="closeUploadModalbtn" onclick="closeFileUploadModal()">Close</button>
+                    <!-- <button class="btn" id="confirmBtn" onclick="closeTagModal()">Cancel</button> -->
                 </div>
             </div>
         </div>

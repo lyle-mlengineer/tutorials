@@ -4,7 +4,7 @@ const fileBrowseInput = document.querySelector(".file-browse-input");
 const fileUploadBox = document.querySelector(".file-upload-box");
 const fileCompletedStatus = document.querySelector(".file-completed-status");
 let totalFiles = 0;
-let completedFiles = 0;
+let completedFiles = 0; 
 // Function to create HTML for each file item
 const createFileItemHTML = (file, uniqueIdentifier) => {
     // Extracting file name, size, and extension
