@@ -35,8 +35,33 @@ def move_images_to_dataset_folder(split: str = "train") -> None:
     print(f"Moved {len(os.listdir(RAW_IMAGES_PATH))} images to {CELEB_FACES_PATH}")
 
 
-move_images_to_dataset_folder()
+# move_images_to_dataset_folder()
 
-dataset = load_dataset("imagefolder", data_dir=CELEB_FACES_PATH)
+# dataset = load_dataset("imagefolder", data_dir=CELEB_FACES_PATH)
+# print(dataset)
+# dataset.push_to_hub(DATASET_NAME, token=os.environ.get('HF_WRITE_TOKEN', None))
+
+# dataset = load_dataset(DATASET_NAME, token=os.environ.get('HF_READ_TOKEN', None))
+# print(dataset)
+
+from huggingface_hub import snapshot_download
+
+# Download the complete repository snapshot at that exact revision
+# local_dir = snapshot_download(
+#     repo_id="imdb", 
+#     repo_type="dataset", 
+#     revision="19c968bc56598c9f0a4f5b5f2ad37e3d81997d76"
+# )
+
+# Download the complete repository snapshot at that exact revision
+local_dir = snapshot_download(
+    repo_id="lyle-mlengineer/kenyan-celeb-faces", 
+    repo_type="dataset", 
+    revision="50ec8c741889b78081756939651447bbbbc12a2c",
+    local_dir="/home/lyle/datasets/kenyan-celeb-faces-original",
+)
+print(f"Downloaded dataset snapshot to: {local_dir}")
+
+snapshot_dir = "/home/lyle/.cache/huggingface/hub/datasets--lyle-mlengineer--kenyan-celeb-faces/snapshots/50ec8c741889b78081756939651447bbbbc12a2c"
+dataset = load_dataset("parquet", data_dir=snapshot_dir)
 print(dataset)
-dataset.push_to_hub(DATASET_NAME, token=os.environ.get('HF_WRITE_TOKEN', None))
