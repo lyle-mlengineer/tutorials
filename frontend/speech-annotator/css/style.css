@@ -32,7 +32,7 @@ body {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     width: 90%;
-    max-width: 700px;
+    max-width: 730px;
 }
 
 .title{
@@ -208,4 +208,137 @@ body {
     justify-content: center;
     gap: 12px;
     width: 100%;
+}
+
+@media screen and (max-width: 400px) {
+    .container{
+        height: 90%;
+        overflow: auto;
+        padding: 12px;
+    }
+
+    .title__text, .title__action-text{
+        display: none;
+    }
+
+    .form-input{
+        flex-direction: column;
+    }
+
+    .audio__input{
+        flex-direction: column;
+        /* border: 1px solid red; */
+        width: 100%;
+    }
+
+    .audio__input{
+        /* border: 1px solid blue; */
+        width: 100%;
+    }
+
+    .audio{
+        /* border: 1px solid red; */
+        width: 100%;
+    }
+
+    .audio-edit__actions{
+        width: 100%;
+        /* border: 1px solid green; */
+    }
+
+    .edit-audio-button{
+        width: 100%;
+        /* border: solid 1px red; */
+    }
+
+    .form-controls{
+        width: 100%;
+    }
+
+    .transcription-input{
+        width: 100%;
+    }
+
+    .form-container__audio-tags{
+        width: 100%;
+    }
+
+    .audio-tags__tag{
+        font-size: 10px;
+    }
+
+    #createtagBtn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+    }
+}
+
+@media screen and (width > 400px) and (width <= 720px) {
+    .container{
+        height: 90%;
+        overflow: auto;
+        padding: 12px;
+    }
+
+    .title__text{
+        display: none;
+    }
+
+    .form-input{
+        flex-direction: column;
+    }
+
+    .audio__input{
+        flex-direction: column;
+        /* border: 1px solid red; */
+        width: 100%;
+    }
+
+    .audio__input{
+        /* border: 1px solid blue; */
+        width: 100%;
+    }
+
+    .audio{
+        /* border: 1px solid red; */
+        width: 100%;
+    }
+
+    .audio-edit__actions{
+        width: 100%;
+        /* border: 1px solid green; */
+    }
+
+    .edit-audio-button{
+        width: 100%;
+        /* border: solid 1px red; */
+    }
+
+    .form-controls{
+        width: 100%;
+    }
+
+    .transcription-input{
+        width: 100%;
+    }
+
+    .form-container__audio-tags{
+        width: 100%;
+    }
+
+    .audio-tags__tag{
+        font-size: 12px;
+    }
+
+    #createtagBtn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+    }
+
 }
