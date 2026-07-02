@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Speech Transcriber</title>
     <!-- Link to CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{  url_for('static', path='css/style.css') }}">
     <!-- Link to Box Icons -->
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <!-- Linking Box Icon for Icons -->
@@ -34,7 +34,7 @@
 
         <div class="audio__input">
             <div class="audio">
-                <audio src="audio/audio_70_2.wav" class="audio-player" id="audioPlayer" controls></audio>
+                <audio src="{{ audio_url }}" class="audio-player" id="audioPlayer" data-audio-id="{{ audio_id }}" controls></audio>
             </div>
 
             <div class="audio-edit__action">
@@ -53,21 +53,11 @@
             <div class="form-controls">
 
                 <div class="form-container__audio-tags">
-                    <div class="audio-tags__tag" id="tag1">
-                        Happy
+                    {% for tag in tags %}
+                    <div class="audio-tags__tag" id="tag{{ tag.id }}" data-tag-id="{{ tag.id }}">
+                        {{ tag.name }}
                     </div>
-                    <div class="audio-tags__tag" id="tag2">
-                        Sad
-                    </div>
-                    <div class="audio-tags__tag" id="tag3">
-                        Cheerful
-                    </div>
-                    <div class="audio-tags__tag" id="tag4">
-                        Shaky voice
-                    </div>
-                    <div class="audio-tags__tag" id="tag5">
-                        Feminine
-                    </div>
+                    {% endfor %}
                 </div>
 
                 <div class="form-container__dropdown-group">
@@ -79,15 +69,16 @@
 
                     <!-- DROPDOWN ACCENT -->
                     <select class="form-container__dropdown form-input" id="dropdownAccent">
-                        <option value="american">Luo</option>
-                        <option value="british">Kikuyu</option>
-                        <option value="british">Swahili</option>
+                        {% for accent in accents %}
+                        <option value="{{ accent.id }}">{{ accent.name }}</option>
+                        {% endfor %}
                     </select>
 
                     <!-- DROPDOWN SPEAKER -->
                     <select class="form-container__dropdown form-input" id="dropdownSpeaker">
-                        <option value="male">Abel</option>
-                        <option value="female">Nusra</option>
+                        {% for speaker in speakers %}
+                        <option value="{{ speaker.id }}">{{ speaker.name }}</option>
+                        {% endfor %}
                     </select>
 
                     <button class="tag-button btn" id="createtagBtn" onclick="openTagModal()">
@@ -106,7 +97,9 @@
             </div>
         </div>
 
+        <script src="{{ url_for('static', path='js/main.js') }}"></script>
     </main>
     
 </body>
 </html>
+                    
